@@ -143,7 +143,7 @@ const Hero = () => {
             >
               <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-white/20"></div>
               <p className="text-white/30 tracking-[0.8em] uppercase text-[9px] md:text-xs font-black font-rajdhani whitespace-nowrap italic">
-                #ZeroToInfiniti // MLBB DIV
+                #ZeroToInfiniti // MLBB
               </p>
             </motion.div>
           </div>
