@@ -5,7 +5,6 @@ const Gallery = () => {
   const [filter, setFilter] = useState('all');
   const [isMobile, setIsMobile] = useState(false);
 
-  // Check device size
   useEffect(() => {
     const checkDevice = () => setIsMobile(window.innerWidth < 1024);
     checkDevice();
@@ -14,12 +13,12 @@ const Gallery = () => {
   }, []);
 
   const galleryData = [
-    { id: 1, type: 'memories', src: '/GeekSuhaz.jpg', title: 'Watching Geek VS Suhaz' },
-    { id: 2, type: 'memories', src: '/Cameron.jpg', title: 'Trip To Cameron' },
-    { id: 3, type: 'memories', src: '/GamingHouse.jpg', title: 'Gaming House' },
-    { id: 4, type: 'design', src: '/JerseyDesign.png', title: 'Jersey 2022' },
-    { id: 5, type: 'design', src: '/NewMatchday.png', title: 'Matchday Poster' },
-    { id: 6, type: 'design', src: '/FullLineup2026.png', title: 'Lineup Poster' },
+    { id: 1, type: 'memories', src: '/GeekSuhaz.jpg', title: 'Geek VS Suhaz Live', size: 'large' },
+    { id: 2, type: 'memories', src: '/Cameron.jpg', title: 'Cameron Highland Trip', size: 'small' },
+    { id: 3, type: 'memories', src: '/GamingHouse.jpg', title: 'Gaming House', size: 'small' },
+    { id: 4, type: 'design', src: '/JerseyDesign.png', title: 'Kit 2022 Concept', size: 'small' },
+    { id: 5, type: 'design', src: '/NewMatchday.png', title: 'Matchday Poster', size: 'large' },
+    { id: 6, type: 'design', src: '/FullLineup2026.png', title: '2026 Roster Reveal', size: 'small' },
   ];
 
   const filteredImages = filter === 'all' 
@@ -27,74 +26,110 @@ const Gallery = () => {
     : galleryData.filter(img => img.type === filter);
 
   return (
-    <div id="gallery" className="w-full max-w-6xl mx-auto px-6 py-24 md:py-32">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8">
-        <div>
-          <h2 className="text-4xl md:text-5xl font-orbitron font-black uppercase tracking-tighter mb-4 italic">
-            The <span className="text-white/20">Archive</span>
+    <div id="gallery" className="w-full max-w-7xl mx-auto px-6 py-24 md:py-32 relative">
+      
+      {/* --- BACKGROUND HUD DECOR --- */}
+      <div className="absolute top-40 right-10 opacity-5 font-orbitron text-[8px] tracking-[2em] uppercase hidden md:block [writing-mode:vertical-lr]">
+        Visual_Database // Unit_Archive
+      </div>
+
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-10">
+        <div className="relative">
+          <div className="absolute -left-4 top-0 h-full w-[2px] bg-white opacity-20"></div>
+          <h2 className="text-5xl md:text-7xl font-orbitron font-black uppercase tracking-tighter italic leading-none">
+            THE <br /><span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>ARCHIVE</span>
           </h2>
-          <div className="w-20 h-1 bg-white/20"></div>
+          <p className="text-[10px] font-rajdhani font-black text-white/20 tracking-[0.5em] mt-4 uppercase italic">
+            Visual_History // Log_Files
+          </p>
         </div>
 
-        {/* Filter Buttons - Optimized for touch */}
-        <div className="flex flex-wrap gap-2 md:gap-4 font-rajdhani">
+        {/* Gen-Z Brutalist Filter Buttons */}
+        <div className="flex flex-wrap gap-2 font-orbitron">
           {['all', 'design', 'memories'].map((tab) => (
             <button
               key={tab}
               onClick={() => setFilter(tab)}
-              className={`px-4 md:px-6 py-2 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] transition-all border ${
-                filter === tab 
-                ? 'bg-white text-black border-white' 
-                : 'text-white/40 border-white/10'
-              }`}
+              className={`px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all relative overflow-hidden border
+                ${filter === tab 
+                  ? 'bg-white text-black border-white' 
+                  : 'bg-transparent text-white/40 border-white/10 hover:border-white/40'
+                }`}
             >
-              {tab}
+              <span className="relative z-10">{tab}</span>
+              {filter === tab && (
+                <motion.div layoutId="tab-bg" className="absolute inset-0 bg-white" />
+              )}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Grid Gallery */}
-      <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Asymmetric Grid Gallery */}
+      <motion.div layout className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
         <AnimatePresence mode='popLayout'>
           {filteredImages.map((img) => (
             <motion.div
               layout
               key={img.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
-              className="relative aspect-square overflow-hidden group rounded-xl bg-zinc-900 border border-white/5"
+              transition={{ duration: 0.4 }}
+              className="relative break-inside-avoid group bg-zinc-900 border border-white/5 overflow-hidden"
             >
-              {/* Image Logic */}
+              {/* Image Frame HUD */}
+              <div className="absolute top-2 right-2 z-30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="text-[8px] font-orbitron bg-white text-black px-2 py-0.5 font-black uppercase tracking-tighter">
+                  IMG_V{img.id}
+                </div>
+              </div>
+
               <img 
                 src={img.src} 
                 alt={img.title}
-                // Kat Mobile: Sentiasa berwarna & tak zoom | Kat PC: Grayscale & zoom on hover
-                className={`w-full h-full object-cover transition-all duration-700 ease-in-out 
+                className={`w-full h-auto object-cover transition-all duration-700 ease-out 
                   ${isMobile 
-                    ? 'grayscale-0 opacity-100 scale-100' 
-                    : 'grayscale group-hover:grayscale-0 opacity-60 group-hover:opacity-100 group-hover:scale-110'
+                    ? 'grayscale-0 opacity-100' 
+                    : 'grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105'
                   }`}
               />
 
-              {/* Overlay Content */}
-              <div className={`absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex flex-col justify-end p-6 transition-opacity duration-300
-                ${isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+              {/* Brutalist Content Overlay */}
+              <div className={`absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-6 transition-all duration-500
+                ${isMobile ? 'opacity-100' : 'opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0'}`}
               >
-                <p className="text-[9px] text-white/50 uppercase tracking-[0.3em] font-bold mb-1 font-rajdhani">
-                  {img.type}
-                </p>
-                <h4 className="text-white font-orbitron font-bold uppercase text-sm md:text-lg leading-tight">
+                {/* HUD Label */}
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-4 h-[1px] bg-white"></div>
+                  <p className="text-[8px] text-white/50 uppercase tracking-[0.4em] font-black font-rajdhani italic">
+                    {img.type}
+                  </p>
+                </div>
+                
+                <h4 className="text-white font-orbitron font-black uppercase text-lg italic tracking-tighter leading-none">
                   {img.title}
                 </h4>
+
+                {/* Corner Frame Decoration */}
+                <div className="absolute bottom-2 right-2 w-4 h-4 border-r border-b border-white/20"></div>
               </div>
+
+              {/* Scanline Effect on Hover */}
+              {!isMobile && (
+                <div className="absolute inset-0 z-10 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%)] bg-[length:100%_4px] opacity-0 group-hover:opacity-10 transition-opacity"></div>
+              )}
             </motion.div>
           ))}
         </AnimatePresence>
       </motion.div>
+
+      {/* Bottom Footer Data */}
+      <div className="mt-16 flex justify-between items-center opacity-10 border-t border-white/10 pt-8 font-orbitron text-[8px] tracking-[0.5em] uppercase italic">
+        <span>End_Of_Archive</span>
+        <span>Storage_Used: 84%</span>
+      </div>
     </div>
   );
 };
