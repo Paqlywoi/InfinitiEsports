@@ -4,10 +4,11 @@ import { motion } from 'framer-motion';
 const matchData = {
   // Pindahkan data dari sini ke 'results' bila match dah habis 
    // if have match [{id: 1, vs: "Madfox Chaos", tournament: "MAL QUalifier S2" , date: '14 MAR', time: "8:PM" }]
-   // if not have match upcoming: []
-upcoming: [{id: 1, vs: "Madfox Chaos", tournament: "MAL QUalifier S5" , date: '14 MAR', time: "8:00PM" }],
+   // if not have match upcoming: [],
+upcoming: [],
 
   results: [
+    { id: 1, vs: "Madfox Chaos", score: "0 - 1", status: "LOSS", event: "MAL Qualifier S5" },
     { id: 2, vs: "Volt Esport", score: "0 - 2", status: "LOSS", event: "Friendly" },
     { id: 4, vs: "Red Liquid", score: "0 - 2", status: "LOSS", event: "Friendly" },
     { id: 5, vs: "RRQ Kaishi", score: "2 - 0", status: "WIN", event: "Friendly" },
