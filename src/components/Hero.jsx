@@ -69,31 +69,37 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-[#050505] z-10"></div>
       </div>
 
-      {/* --- 2. THE DECORATIVE HUD (Clock & Date - Works on Mobile) --- */}
-      <div className="absolute top-8 md:top-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center w-full px-4">
-        <div className="flex items-center gap-3 md:gap-6 px-4 md:px-6 py-1.5 md:py-2 bg-white/[0.02] backdrop-blur-md border border-white/5 rounded-full shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-          
+      {/* --- 2. ADAPTIVE SYSTEM HUD (TIME & DATE) --- */}
+      <div className={`absolute z-40 flex justify-center pointer-events-none transition-all duration-500
+        ${isMobile 
+          ? 'bottom-16 left-0 w-full px-4' // Mobile: Above Live Feed
+          : 'top-10 left-1/2 -translate-x-1/2 w-auto' // Desktop: Top Center
+        }`}
+      >
+        <div className={`flex items-center backdrop-blur-md border border-white/5 rounded-full shadow-2xl
+          ${isMobile 
+            ? 'gap-4 px-5 py-2 bg-black/60 border-white/10' 
+            : 'gap-8 px-8 py-2 bg-white/[0.02]' 
+          }`}
+        >
           {/* Time Section */}
           <div className="flex items-center gap-2 md:gap-3">
-            <span className="text-white/20 text-[6px] md:text-[7px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] font-orbitron">Time</span>
-            <div className="text-white font-orbitron text-sm md:text-lg font-black tracking-widest tabular-nums leading-none">
+            <span className="text-white/20 text-[6px] md:text-[7px] font-black uppercase tracking-[0.3em] font-orbitron">Time</span>
+            <div className="text-white font-orbitron text-xs md:text-lg font-black tracking-widest tabular-nums leading-none">
               {formatTime(time)}
             </div>
           </div>
 
-          {/* Vertical Divider */}
           <div className="h-3 md:h-4 w-[1px] bg-white/20"></div>
 
           {/* Date Section */}
           <div className="flex items-center gap-2 md:gap-3">
-            <span className="text-white/20 text-[6px] md:text-[7px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] font-orbitron">Date</span>
-            <div className="text-white/70 font-orbitron text-[9px] md:text-[11px] font-black tracking-[0.1em] md:tracking-[0.2em] leading-none whitespace-nowrap uppercase">
+            <span className="text-white/20 text-[6px] md:text-[7px] font-black uppercase tracking-[0.3em] font-orbitron">Date</span>
+            <div className="text-white/70 font-orbitron text-[9px] md:text-[11px] font-black tracking-[0.1em] md:tracking-[0.2em] leading-none whitespace-nowrap uppercase italic">
               {formatDate(time)}
             </div>
           </div>
         </div>
-        {/* Decorative Glow Line - Hidden on Mobile to prevent clutter */}
-        <div className="hidden md:block h-[1px] w-24 bg-gradient-to-r from-transparent via-white/10 to-transparent mt-2"></div>
       </div>
 
       {/* LEFT HUD: STATUS (Desktop Only) */}
