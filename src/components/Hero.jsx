@@ -69,54 +69,54 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-[#050505] z-10"></div>
       </div>
 
-      {/* --- 2. THE DECORATIVE HUD (Single Line Clock & Date) --- */}
+      {/* --- 2. THE DECORATIVE HUD (Clock & Date - Works on Mobile) --- */}
+      <div className="absolute top-8 md:top-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center w-full px-4">
+        <div className="flex items-center gap-3 md:gap-6 px-4 md:px-6 py-1.5 md:py-2 bg-white/[0.02] backdrop-blur-md border border-white/5 rounded-full shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+          
+          {/* Time Section */}
+          <div className="flex items-center gap-2 md:gap-3">
+            <span className="text-white/20 text-[6px] md:text-[7px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] font-orbitron">Time</span>
+            <div className="text-white font-orbitron text-sm md:text-lg font-black tracking-widest tabular-nums leading-none">
+              {formatTime(time)}
+            </div>
+          </div>
+
+          {/* Vertical Divider */}
+          <div className="h-3 md:h-4 w-[1px] bg-white/20"></div>
+
+          {/* Date Section */}
+          <div className="flex items-center gap-2 md:gap-3">
+            <span className="text-white/20 text-[6px] md:text-[7px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] font-orbitron">Date</span>
+            <div className="text-white/70 font-orbitron text-[9px] md:text-[11px] font-black tracking-[0.1em] md:tracking-[0.2em] leading-none whitespace-nowrap uppercase">
+              {formatDate(time)}
+            </div>
+          </div>
+        </div>
+        {/* Decorative Glow Line - Hidden on Mobile to prevent clutter */}
+        <div className="hidden md:block h-[1px] w-24 bg-gradient-to-r from-transparent via-white/10 to-transparent mt-2"></div>
+      </div>
+
+      {/* LEFT HUD: STATUS (Desktop Only) */}
       {!isMobile && (
-        <>
-          {/* TOP CENTER: SYSTEM CLOCK & DATE SEBARIS */}
-          <div className="absolute top-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center">
-            <div className="flex items-center gap-6 px-6 py-2 bg-white/[0.02] backdrop-blur-md border border-white/5 rounded-full shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-              {/* Time Section */}
-              <div className="flex items-center gap-3">
-                <span className="text-white/20 text-[7px] font-black uppercase tracking-[0.3em] font-orbitron">Time</span>
-                <div className="text-white font-orbitron text-lg font-black tracking-widest tabular-nums leading-none">
-                  {formatTime(time)}
-                </div>
-              </div>
-
-              {/* Vertical Divider */}
-              <div className="h-4 w-[1px] bg-white/20"></div>
-
-              {/* Date Section */}
-              <div className="flex items-center gap-3">
-                <span className="text-white/20 text-[7px] font-black uppercase tracking-[0.3em] font-orbitron">Date</span>
-                <div className="text-white/70 font-orbitron text-[11px] font-black tracking-[0.2em] leading-none">
-                  {formatDate(time)}
-                </div>
-              </div>
-            </div>
-            {/* Decorative Bottom Glow Line */}
-            <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-white/10 to-transparent mt-2"></div>
+        <div className="absolute top-10 left-32 z-40 flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-white rounded-full animate-pulse shadow-[0_0_8px_#fff]"></div>
+            <span className="text-white/20 text-[8px] font-black uppercase tracking-[0.3em] font-orbitron">Live_Status: Active</span>
           </div>
+          <div className="h-[1px] w-24 bg-white/10"></div>
+        </div>
+      )}
 
-          {/* LEFT HUD: STATUS */}
-          <div className="absolute top-10 left-32 z-40 flex flex-col gap-1">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse shadow-[0_0_8px_#fff]"></div>
-              <span className="text-white/20 text-[8px] font-black uppercase tracking-[0.3em] font-orbitron">Live_Status: Active</span>
-            </div>
-            <div className="h-[1px] w-24 bg-white/10"></div>
+      {/* BOTTOM RIGHT: COORDINATES (Desktop Only) */}
+      {!isMobile && (
+        <div className="absolute bottom-24 right-10 z-40 text-right opacity-20">
+          <p className="text-white text-[8px] font-black uppercase tracking-[0.5em] font-orbitron mb-2">Coordinates: 3.0738° N, 101.5183° E</p>
+          <div className="flex justify-end gap-1">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="w-1 h-3 bg-white/40"></div>
+            ))}
           </div>
-
-          {/* BOTTOM RIGHT: COORDINATES */}
-          <div className="absolute bottom-24 right-10 z-40 text-right opacity-20">
-            <p className="text-white text-[8px] font-black uppercase tracking-[0.5em] font-orbitron mb-2">Coordinates: 3.0738° N, 101.5183° E</p>
-            <div className="flex justify-end gap-1">
-              {[...Array(5)].map((_, i) => (
-                <div key={i} className="w-1 h-3 bg-white/40"></div>
-              ))}
-            </div>
-          </div>
-        </>
+        </div>
       )}
 
       {/* --- 3. DYNAMIC TEXTURES --- */}
