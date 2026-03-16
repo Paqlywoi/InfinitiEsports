@@ -12,7 +12,7 @@ upcoming: [],
     { id: 2, vs: "Volt Esport", score: "0 - 2", status: "LOSS", event: "Friendly" },
     { id: 4, vs: "Red Liquid", score: "0 - 2", status: "LOSS", event: "Friendly" },
     { id: 5, vs: "RRQ Kaishi", score: "2 - 0", status: "WIN", event: "Friendly" },
-    { id: 6, vs: "UiTM Pulau Pinang", score: "1 - 0", status: "WIN", event: "Friendly" },
+    { id: 6, vs: "Wakil UiTM Pulau Pinang", score: "1 - 0", status: "WIN", event: "Friendly" },
     { id: 7, vs: "Estupido Familia", score: "2 - 0", status: "WIN", event: "Friendly" },
     { id: 8, vs: "Hydra Mystic", score: "2 - 0", status: "WIN", event: "Friendly" },
     { id: 9, vs: "Volt Esport", score: "2 - 1", status: "WIN", event: "Friendly" }
