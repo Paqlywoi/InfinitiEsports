@@ -19,6 +19,8 @@ const Gallery = () => {
     { id: 4, type: 'design', src: '/JerseyDesign.png', title: 'Kit 2022 Concept', size: 'small' },
     { id: 5, type: 'design', src: '/NewMatchday.png', title: 'Matchday Poster', size: 'large' },
     { id: 6, type: 'design', src: '/FullLineup2026.png', title: '2026 Roster Reveal', size: 'small' },
+    { id: 7, type: 'memories', src: '/Genting2.jpg', title: 'Genting Trip', size: 'small' },
+    { id: 8, type: 'memories', src: '/Aidilfitri2026.jpg', title: 'Sambutan Hari Raya Aidilfitri 2026', size: 'small' },
   ];
 
   const filteredImages = filter === 'all' 
