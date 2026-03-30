@@ -10,7 +10,7 @@ const eras = [
     desc: 'The genesis. It all began with a tight-knit circle of friends fueled by a pure passion for MLBB.' 
   },
   { 
-    year: '2023', 
+    year: '2022', 
     logo: '/OldInfiniti2.png', 
     title: 'Infiniti Esports', 
     version: 'V2.0_EVOLVE',

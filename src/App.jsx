@@ -45,8 +45,6 @@ function App() {
       
       <CustomCursor />
       <Navbar />
-      
-      {/* --- ASSISTANT DELETED --- */}
 
       <main className="flex-1">
         <section id="home"><Hero /></section>
@@ -72,13 +70,26 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24">
             
             {/* 1. Brand Section */}
-            <div className="col-span-1 md:col-span-2 space-y-6">
-              <h2 className="text-4xl font-orbitron font-black text-white italic tracking-tighter uppercase">
-                INFINITI<span className="text-white/20 ml-2 font-light">ESPORTS</span>
-              </h2>
-              <p className="text-white/40 text-[10px] font-rajdhani tracking-[0.4em] leading-relaxed max-w-sm uppercase italic">
-                The ultimate digital frontier for competitive gaming. Based in Malaysia. Driven by data, secured by skill. 
-              </p>
+            <div className="col-span-1 md:col-span-2 space-y-8">
+              {/* --- LOGO SECTION --- */}
+              <div className="flex items-center gap-4">
+                <img 
+                  src="/InfinitiLogo.png" // Pastikan file logo ada di folder public
+                  alt="Infiniti Logo" 
+                  className="w-12 h-12 md:w-16 md:h-16 object-contain brightness-125"
+                />
+                <div className="h-10 w-[1px] bg-white/10 hidden md:block" />
+              </div>
+
+              <div className="space-y-4">
+                <h2 className="text-4xl font-orbitron font-black text-white italic tracking-tighter uppercase leading-tight">
+                  INFINITI<span className="text-white/20 ml-2 font-light">ESPORTS</span>
+                </h2>
+                <p className="text-white/40 text-[10px] font-rajdhani tracking-[0.4em] leading-relaxed max-w-sm uppercase italic">
+                  The ultimate digital frontier for competitive gaming. Based in Malaysia. Driven by data, secured by skill. 
+                </p>
+              </div>
+
               <div className="flex gap-4">
                 <div className="px-3 py-1 border border-white/10 rounded-full text-[8px] text-white/30 font-orbitron uppercase tracking-widest">
                   EST. 2021
@@ -108,10 +119,10 @@ function App() {
             <div className="space-y-6">
               <h4 className="text-[10px] font-black text-white uppercase tracking-[0.5em] font-rajdhani">Social_Network</h4>
               <div className="flex flex-col gap-4 text-left">
-                <a href="https://instagram.com/infinitiesportsmy" target="_blank" className="text-[10px] text-white/40 hover:text-white font-orbitron tracking-widest">
+                <a href="https://instagram.com/infinitiesportsmy" target="_blank" rel="noreferrer" className="text-[10px] text-white/40 hover:text-white font-orbitron tracking-widest">
                   // INSTAGRAM
                 </a>
-                <a href="https://discord.gg/yduStkjB" target="_blank" className="text-[10px] text-white/40 hover:text-white font-orbitron tracking-widest">
+                <a href="https://discord.gg/yduStkjB" target="_blank" rel="noreferrer" className="text-[10px] text-white/40 hover:text-white font-orbitron tracking-widest">
                   // DISCORD
                 </a>
               </div>
@@ -121,7 +132,7 @@ function App() {
           {/* Bottom Bar */}
           <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="text-[8px] text-white/20 tracking-[0.8em] uppercase font-black font-rajdhani">
-              © 2026 INFINITI ESPORTS MY • ALL RIGHT RESERVED
+              © 2026 INFINITI ESPORTS MY • ALL RIGHTS RESERVED
             </div>
             <div className="flex gap-8">
               <span className="text-[7px] text-white/10 font-orbitron uppercase tracking-[0.4em]">v2.0.4_STABLE</span>
