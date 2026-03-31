@@ -13,7 +13,7 @@ const Sponsors = () => {
   }, []);
 
   const sponsors = [
-    { id: 1, name: "MUHAIM", logo: "/MuhaimLogo.png" },
+    { id: 1, name: "MUHAIM", logo: "/Muhaim.png" },
     { id: 2, name: "NiceTry Store", logo: "/NiceTryLogo.png" },
   ];
 
