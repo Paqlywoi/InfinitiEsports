@@ -11,8 +11,19 @@ const Gallery = () => {
     const checkDevice = () => setIsMobile(window.innerWidth < 1024);
     checkDevice();
     window.addEventListener('resize', checkDevice);
-    return () => window.removeEventListener('resize', checkDevice);
-  }, []);
+    
+    // FIX: Lock scroll bila modal buka
+    if (selectedImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      window.removeEventListener('resize', checkDevice);
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedImage]);
 
   const galleryData = [
     { id: 1, type: 'memories', src: '/GeekSuhaz.jpg', title: 'Geek VS Suhaz Live' },
@@ -30,7 +41,7 @@ const Gallery = () => {
     : galleryData.filter(img => img.type === filter);
 
   return (
-    <div id="gallery" className="w-full max-w-7xl mx-auto px-6 py-24 md:py-32 relative font-mono">
+    <div id="gallery" className="w-full max-w-7xl mx-auto px-4 md:px-6 py-24 md:py-32 relative font-mono">
       
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-10">
@@ -42,13 +53,12 @@ const Gallery = () => {
           <p className="text-[10px] text-white/20 tracking-[0.5em] mt-4 uppercase italic">Visual_History // Log_Files</p>
         </div>
 
-        {/* Filters */}
         <div className="flex flex-wrap gap-2">
           {['all', 'design', 'memories'].map((tab) => (
             <button
               key={tab}
               onClick={() => setFilter(tab)}
-              className={`px-6 py-2 text-[10px] font-black uppercase tracking-widest transition-all border
+              className={`px-4 md:px-6 py-2 text-[10px] font-black uppercase tracking-widest transition-all border
                 ${filter === tab ? 'bg-white text-black border-white' : 'bg-transparent text-white/40 border-white/10'}`}
             >
               {tab}
@@ -58,7 +68,7 @@ const Gallery = () => {
       </div>
 
       {/* Grid Gallery */}
-      <motion.div layout className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+      <motion.div layout className="columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-6 space-y-4 md:space-y-6">
         <AnimatePresence mode='popLayout'>
           {filteredImages.map((img) => (
             <motion.div
@@ -68,16 +78,16 @@ const Gallery = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className={`relative break-inside-avoid group bg-zinc-900 border border-white/5 overflow-hidden ${img.isBlueprint ? 'cursor-zoom-in' : 'cursor-default'}`}
+              className={`relative break-inside-avoid group bg-zinc-900 border border-white/5 overflow-hidden rounded-sm touch-manipulation ${img.isBlueprint ? 'cursor-zoom-in' : 'cursor-default'}`}
             >
               <img 
                 src={img.src} 
-                className={`w-full h-auto object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700`}
+                className="w-full h-auto object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
                 alt={img.title}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black p-6 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className={`absolute inset-0 bg-gradient-to-t from-black p-4 md:p-6 flex flex-col justify-end transition-opacity ${isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
                 <p className="text-[8px] text-white/40 uppercase tracking-widest">{img.type}</p>
-                <h4 className="text-white font-orbitron font-black uppercase italic">{img.title}</h4>
+                <h4 className="text-white font-orbitron font-black uppercase italic text-sm md:text-base">{img.title}</h4>
                 {img.isBlueprint && <span className="text-[8px] text-blue-400 mt-2 font-black tracking-widest animate-pulse">[ CLICK_FOR_BLUEPRINT ]</span>}
               </div>
             </motion.div>
@@ -85,85 +95,83 @@ const Gallery = () => {
         </AnimatePresence>
       </motion.div>
 
-      {/* --- BLUEPRINT MODAL --- */}
+      {/* --- BLUEPRINT MODAL (FIXED FOR MOBILE) --- */}
       <AnimatePresence>
         {selectedImage && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10">
-            {/* Backdrop */}
+          <div className="fixed inset-0 z-[999] flex items-center justify-center p-0 md:p-10">
+            {/* Backdrop - High Z-Index & Mobile Click Fix */}
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedImage(null)}
-              className="absolute inset-0 bg-black/95 backdrop-blur-xl"
+              className="absolute inset-0 bg-black/95 backdrop-blur-xl cursor-pointer"
             />
 
             {/* Modal Content */}
             <motion.div 
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="relative w-full max-w-5xl bg-[#0a0a0a] border border-white/10 overflow-hidden shadow-[0_0_100px_rgba(255,255,255,0.05)]"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              className="relative w-full h-full md:h-auto max-w-5xl bg-[#0a0a0a] md:border md:border-white/10 overflow-y-auto md:overflow-hidden shadow-2xl"
             >
-              {/* Technical Grid Background */}
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:30px_30px] opacity-20" />
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:20px_20px] md:bg-[size:30px_30px] opacity-20" />
 
-              {/* Toolbar */}
-              <div className="relative z-10 flex justify-between items-center p-4 border-b border-white/10 bg-black/50">
-                <div className="flex items-center gap-4">
+              {/* Toolbar - Sticky for Mobile */}
+              <div className="sticky top-0 z-50 flex justify-between items-center p-4 border-b border-white/10 bg-black/80 backdrop-blur-md">
+                <div className="flex items-center gap-3">
                   <Cpu size={14} className="text-blue-500 animate-pulse" />
-                  <span className="text-[10px] font-black tracking-[0.3em] uppercase">Tech_Specs // {selectedImage.title}</span>
+                  <span className="text-[10px] font-black tracking-[0.2em] uppercase truncate max-w-[150px] md:max-w-none">
+                    Tech_Specs // {selectedImage.title}
+                  </span>
                 </div>
-                <button onClick={() => setSelectedImage(null)} className="p-2 hover:bg-white/10 transition-colors">
-                  <X size={18} />
+                {/* Bigger Close Button for Mobile Fingers */}
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedImage(null);
+                  }} 
+                  className="p-3 -mr-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors"
+                >
+                  <X size={24} className="text-white" />
                 </button>
               </div>
 
-              <div className="relative z-10 p-6 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="relative z-10 p-6 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start md:items-center">
                 {/* Visual View */}
-                <div className="relative group">
-                  <div className="absolute -inset-4 border border-white/5 pointer-events-none" />
-                  <img src={selectedImage.src} className="w-full h-auto opacity-20 blur-[2px] absolute scale-105" alt="underlay" />
+                <div className="relative group mx-auto w-full max-w-sm md:max-w-none">
                   <img src={selectedImage.src} className="w-full h-auto relative z-10 border border-blue-500/20" alt="blueprint" />
-                  
-                  {/* Floating Measurement Lines */}
-                  <div className="absolute top-1/2 -left-8 w-16 h-[1px] bg-blue-500/50 z-20 hidden md:block" />
-                  <div className="absolute top-1/2 -right-8 w-16 h-[1px] bg-blue-500/50 z-20 hidden md:block" />
+                  <div className="absolute top-1/2 -left-4 md:-left-8 w-8 md:w-16 h-[1px] bg-blue-500/50 z-20" />
+                  <div className="absolute top-1/2 -right-4 md:-right-8 w-8 md:w-16 h-[1px] bg-blue-500/50 z-20" />
                 </div>
 
                 {/* Data Panel */}
-                <div className="space-y-8">
+                <div className="space-y-6 md:space-y-8 pb-10 md:pb-0">
                   <div>
-                    <h3 className="text-3xl font-orbitron font-black italic mb-2">FABRIC_ANATOMY</h3>
-                    <p className="text-xs text-white/40 tracking-widest uppercase">System_Version: 2.0.4 // Autumn_Kit</p>
+                    <h3 className="text-2xl md:text-3xl font-orbitron font-black italic mb-2">FABRIC_ANATOMY</h3>
+                    <p className="text-[10px] text-white/40 tracking-widest uppercase">System_Version: 2.0.4</p>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 md:gap-4">
                     {[
-                      { label: 'MATERIAL', value: 'Hexa-Mesh Breathable Fiber', icon: <Layers size={14}/> },
-                      { label: 'WEIGHT', value: '145 GSM Light-weight', icon: <Move size={14}/> },
-                      { label: 'PRINTING', value: 'Full Sublimation (Neon Infused)', icon: <Cpu size={14}/> },
-                      { label: 'LOGO_SPECS', value: '3D High-Density Silicone Patch', icon: <X size={14}/> }
+                      { label: 'MATERIAL', value: 'Hexa-Mesh Fiber', icon: <Layers size={14}/> },
+                      { label: 'WEIGHT', value: '145 GSM Light', icon: <Move size={14}/> },
+                      { label: 'PRINTING', value: 'Neon Sublimation', icon: <Cpu size={14}/> },
+                      { label: 'LOGO', value: '3D Silicone Patch', icon: <X size={14}/> }
                     ].map((spec, i) => (
-                      <motion.div 
-                        initial={{ x: 20, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: i * 0.1 }}
-                        key={i} 
-                        className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/5 hover:border-blue-500/30 transition-all group"
-                      >
-                        <div className="text-blue-500 opacity-50 group-hover:opacity-100 transition-opacity">{spec.icon}</div>
+                      <div key={i} className="flex items-center gap-4 p-4 bg-white/[0.03] border border-white/10">
+                        <div className="text-blue-500">{spec.icon}</div>
                         <div>
                           <p className="text-[8px] text-white/20 font-black tracking-widest">{spec.label}</p>
                           <p className="text-[10px] text-white font-bold uppercase">{spec.value}</p>
                         </div>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
 
-                  <div className="pt-6 border-t border-white/10">
-                    <p className="text-[9px] text-white/30 italic leading-relaxed uppercase">
-                      "Designed for maximum performance and brand visibility. This kit utilizes neural-mesh technology to ensure athlete comfort during high-intensity matches."
+                  <div className="pt-6 border-t border-white/10 opacity-60">
+                    <p className="text-[9px] leading-relaxed uppercase italic">
+                      "Engineered for high-intensity competitive environments. Neural-mesh integration complete."
                     </p>
                   </div>
                 </div>
@@ -176,7 +184,7 @@ const Gallery = () => {
       {/* Footer */}
       <div className="mt-16 flex justify-between items-center opacity-10 border-t border-white/10 pt-8 text-[8px] tracking-[0.5em] uppercase italic">
         <span>End_Of_Archive</span>
-        <span>Designer: Haziq_Fakhri</span>
+        <span className="hidden sm:inline">Designer: Haziq_Fakhri</span>
       </div>
     </div>
   );
