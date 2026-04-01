@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const eras = [
   { 
-    year: '2021', 
+    year: '2019', 
     logo: '/OldInfiniti1.png', 
     title: 'Zoo Esports', 
     version: 'V1.0_GENESIS',

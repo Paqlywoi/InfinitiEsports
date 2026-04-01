@@ -42,7 +42,7 @@ const AboutUs = () => {
               className="text-transparent" 
               style={{ WebkitTextStroke: '1px rgba(255,255,255,0.3)' }}
             >
-              SINCE 2021
+              SINCE 2019
             </span>
           </h1>
 

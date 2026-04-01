@@ -92,7 +92,7 @@ function App() {
 
               <div className="flex gap-4">
                 <div className="px-3 py-1 border border-white/10 rounded-full text-[8px] text-white/30 font-orbitron uppercase tracking-widest">
-                  EST. 2021
+                  EST. 2019
                 </div>
                 <div className="px-3 py-1 border border-white/10 rounded-full text-[8px] text-white/30 font-orbitron uppercase tracking-widest">
                   MLBB_UNIT
