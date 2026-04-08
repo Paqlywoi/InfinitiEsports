@@ -8,6 +8,7 @@ const players = [
   { id: 3, name: 'PAKLY', role: 'MID LANER', signature: 'Zuxhin', topHeroes: ['Zuxhin', 'Valentina', 'Vexana'], quote: "Control the mid, control the game.", img: '/PaklyRaw.png', stats: { mechanics: 88, mapSense: 95, aggression: 70, teamwork: 98, pool: 90 } },
   { id: 4, name: 'STARLIGHTEX', role: 'GOLD LANER', signature: 'Claude', topHeroes: ['Claude', 'Karrie', 'Moskov'], quote: "Scaling is a lifestyle.", img: '/StarRaw.png', stats: { mechanics: 92, mapSense: 80, aggression: 85, teamwork: 82, pool: 78 } },
   { id: 5, name: 'IKZN', role: 'ROAMER', signature: 'Grock', topHeroes: ['Grock', 'Tigreal', 'Atlas'], quote: "I am the shield of the team.", img: '/IkznRaw.png', stats: { mechanics: 80, mapSense: 98, aggression: 88, teamwork: 95, pool: 85 } },
+  { id: 6, name: 'IMPOLOLO', role: 'GOLD LANER (SUB)', signature: 'Granger', topHeroes: ['Granger', 'Moskov', 'Claude'], quote: "Done is better than perfect.", img: '/ImpololoRaw.png', stats: { mechanics: 87, mapSense: 77, aggression: 81, teamwork: 83, pool: 75 } },
 ];
 
 // --- COMPONENT RADAR CHART (SVG) ---
@@ -36,7 +37,6 @@ const StatRadar = ({ stats }) => {
   return (
     <div className="relative w-full flex justify-center py-2">
       <svg width="140" height="140" viewBox="0 0 100 100" className="drop-shadow-[0_0_8px_rgba(0,0,0,0.1)]">
-        {/* Background Hexagon */}
         {[20, 40, 60, 80, 100].map((level) => (
           <polygon
             key={level}
@@ -48,7 +48,6 @@ const StatRadar = ({ stats }) => {
             opacity="0.2"
           />
         ))}
-        {/* Data Shape */}
         <motion.polygon
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 0.8 }}
@@ -56,7 +55,6 @@ const StatRadar = ({ stats }) => {
           fill="black"
           className="transition-all duration-1000"
         />
-        {/* Labels */}
         {points.map((p, i) => {
           const coords = getCoordinates(i, 115);
           const [x, y] = coords.split(',');
@@ -121,7 +119,7 @@ const PlayerCard = ({ player }) => {
           </div>
         </div>
 
-        {/* --- BACK SIDE (WITH RADAR CHART) --- */}
+        {/* --- BACK SIDE --- */}
         <div className="absolute inset-0 backface-hidden z-10" style={{ transform: 'rotateY(180deg)' }}>
           <div className="h-full bg-white text-black rounded-sm p-6 flex flex-col justify-between border-2 border-white shadow-2xl text-left relative overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-5 font-orbitron text-[50px] font-black select-none">0{player.id}</div>
@@ -133,7 +131,6 @@ const PlayerCard = ({ player }) => {
                 </h3>
               </div>
 
-              {/* STATS RADAR SECTION */}
               <div className="bg-zinc-100/50 rounded-sm mb-4">
                 <p className="text-[8px] font-black uppercase tracking-widest text-black/40 pt-3 pl-3 font-rajdhani italic">Performance_Analysis</p>
                 <StatRadar stats={player.stats} />
@@ -181,7 +178,8 @@ const Roster = () => {
           <p className="text-white/20 mt-4 tracking-[1em] uppercase text-[9px] font-black font-rajdhani">Classified // Elite_Division</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
+        {/* DIKEMASKINI: lg:grid-cols-3 untuk susunan 3-3 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {players.map((player) => (
             <PlayerCard key={player.id} player={player} />
           ))}

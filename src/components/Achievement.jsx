@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, Medal, LayoutGrid, Star, Target, Terminal } from 'lucide-react';
+import { Trophy, Award, LayoutGrid, Terminal } from 'lucide-react';
 
 const achievements = [
   { 
@@ -17,7 +17,7 @@ const achievements = [
     title: 'Runner Up', 
     tournament: 'Gerko Games', 
     year: '2022', 
-    icon: <Medal />, 
+    icon: <Award />, // Menggunakan Award sebagai ganti Medal (tiada nombor 1)
     code: 'RE-02', 
     color: 'text-zinc-300' 
   },

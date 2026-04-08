@@ -34,6 +34,8 @@ const Gallery = () => {
     { id: 6, type: 'design', src: '/FullLineup2026.png', title: '2026 Roster Reveal' },
     { id: 7, type: 'memories', src: '/Genting2.jpg', title: 'Genting Trip' },
     { id: 8, type: 'memories', src: '/Aidilfitri2026.jpg', title: 'Sambutan Hari Raya Aidilfitri 2026' },
+    { id: 9, type: 'design', src: '/19vs26Kit.png', title: '2022 vs 2026 Kit Concept' },
+    { id: 10, type: 'design', src: '/Somali2026.png', title: 'Somali With 2026 Kit' },
   ];
 
   const filteredImages = filter === 'all' 
