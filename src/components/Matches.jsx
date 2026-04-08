@@ -8,14 +8,15 @@ const matchData = {
 upcoming: [],
 
   results: [
-    { id: 1, vs: "Madfox Chaos", score: "0 - 1", status: "LOSS", event: "MAL Qualifier S5" },
-    { id: 2, vs: "Volt Esport", score: "0 - 2", status: "LOSS", event: "Friendly" },
-    { id: 4, vs: "Red Liquid", score: "0 - 2", status: "LOSS", event: "Friendly" },
+    { id: 9, vs: "Mega Autotech", score: "1 - 2", status: "LOSS", event: "Friendly" },
+    { id: 8, vs: "Madfox Chaos", score: "0 - 1", status: "LOSS", event: "MAL Qualifier S5" },
+    { id: 7, vs: "Volt Esport", score: "0 - 2", status: "LOSS", event: "Friendly" },
+    { id: 6, vs: "Red Liquid", score: "0 - 2", status: "LOSS", event: "Friendly" },
     { id: 5, vs: "RRQ Kaishi", score: "2 - 0", status: "WIN", event: "Friendly" },
-    { id: 6, vs: "Wakil UiTM Pulau Pinang", score: "1 - 0", status: "WIN", event: "Friendly" },
-    { id: 7, vs: "Estupido Familia", score: "2 - 0", status: "WIN", event: "Friendly" },
-    { id: 8, vs: "Hydra Mystic", score: "2 - 0", status: "WIN", event: "Friendly" },
-    { id: 9, vs: "Volt Esport", score: "2 - 1", status: "WIN", event: "Friendly" }
+    { id: 4, vs: "Wakil UiTM Pulau Pinang", score: "1 - 0", status: "WIN", event: "Friendly" },
+    { id: 3, vs: "Estupido Familia", score: "2 - 0", status: "WIN", event: "Friendly" },
+    { id: 2, vs: "Hydra Mystic", score: "2 - 0", status: "WIN", event: "Friendly" },
+    { id: 1, vs: "Volt Esport", score: "2 - 1", status: "WIN", event: "Friendly" }
   ]
 };
 
@@ -36,7 +37,7 @@ const Matches = () => {
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] pointer-events-none"></div>
 
       {/* Header Section */}
-      <div className="mb-16 md:mb-24 text-left relative z-10">
+      <div className="mb-16 md:mb-24 text-left relative z-10">  
         <div className="flex items-center gap-4 mb-4">
           <div className="h-10 w-[2px] bg-white opacity-40"></div>
           <motion.p 

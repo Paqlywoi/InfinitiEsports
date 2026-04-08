@@ -13,7 +13,7 @@ const Assistant = () => {
     return () => window.removeEventListener('resize', checkDevice);
   }, []);
 
-  // --- 3D TILT LOGIC (Macam kat Roster) ---
+  // --- 3D TILT LOGIC ---
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -44,7 +44,7 @@ const Assistant = () => {
   };
 
   return (
-    // Container Floating (Melekat kat Kanan Bawah)
+    // Container Floating 
     <div className="fixed bottom-16 md:bottom-20 right-6 z-[80] font-mono">
       <motion.div
         ref={cardRef}

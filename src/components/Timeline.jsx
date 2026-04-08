@@ -134,7 +134,7 @@ const Timeline = () => {
           <span>LEGACY_CORE_LOG</span>
           <span>UNIT_REBORN_2026</span>
           <span>SYSTEM_STABLE</span>
-          <span>ESTABLISHED_2021</span>
+          <span>ESTABLISHED_2019</span>
         </motion.div>
       </div>
     </section>

@@ -71,7 +71,7 @@ const Sponsors = () => {
                     brightness-125`}
                 />
 
-                {/* Desktop Tooltip (Tetap guna Hover) */}
+                {/* Desktop Tooltip */}
                 {!isMobile && (
                   <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-white text-black text-[9px] font-black px-4 py-1.5 opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 pointer-events-none uppercase tracking-widest italic z-10 shadow-2xl font-orbitron">
                     {s.name}
@@ -79,7 +79,7 @@ const Sponsors = () => {
                 )}
               </motion.div>
 
-              {/* Mobile Label (Keluar bila kena Tap) */}
+              {/* Mobile Label */}
               <AnimatePresence>
                 {isMobile && activeSponsor === s.id && (
                   <motion.p

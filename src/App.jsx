@@ -74,7 +74,7 @@ function App() {
               {/* --- LOGO SECTION --- */}
               <div className="flex items-center gap-4">
                 <img 
-                  src="/InfinitiLogo.png" // Pastikan file logo ada di folder public
+                  src="/InfinitiLogo.png"
                   alt="Infiniti Logo" 
                   className="w-12 h-12 md:w-16 md:h-16 object-contain brightness-125"
                 />
