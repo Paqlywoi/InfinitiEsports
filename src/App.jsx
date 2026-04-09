@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Import Components
 import Navbar from './components/Navbar';
@@ -12,6 +12,7 @@ import Matches from './components/Matches';
 import AboutUs from './components/AboutUs';
 import Gallery from './components/Gallery';
 import Values from './components/Values';
+import AIChatBox from './components/AIChatBox'; // Import Chatbox Baru
 
 // --- CUSTOM CURSOR COMPONENT ---
 const CustomCursor = () => {
@@ -47,7 +48,7 @@ function App() {
       <Navbar />
 
       <main className="flex-1">
-        <section id="home"><Hero /></section>
+        <section id="Hero"><Hero /></section>
         <section id="aboutus"><AboutUs /></section>
         <section id="values"><Values /></section>
         <section id="lineup"><Roster /></section>
@@ -71,7 +72,6 @@ function App() {
             
             {/* 1. Brand Section */}
             <div className="col-span-1 md:col-span-2 space-y-8">
-              {/* --- LOGO SECTION --- */}
               <div className="flex items-center gap-4">
                 <img 
                   src="/InfinitiLogo.png"
@@ -135,11 +135,15 @@ function App() {
               © 2026 INFINITI ESPORTS MY • ALL RIGHTS RESERVED
             </div>
             <div className="flex gap-8">
-              <span className="text-[7px] text-white/10 font-orbitron uppercase tracking-[0.4em]">v2.0.4_STABLE</span>
+              <span className="text-[7px] text-white/10 font-orbitron uppercase tracking-[0.4em]">v2.0.26_STABLE</span>
             </div>
           </div>
         </div>
       </footer>
+
+      {/* --- AI CHATBOX OVERLAY --- */}
+      <AIChatBox />
+
     </div>
   );
 }
