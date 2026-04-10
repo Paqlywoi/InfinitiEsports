@@ -101,74 +101,74 @@ const PlayerCard = ({ player }) => {
   );
 };
 
+// --- FIX: NO-STRETCH INTEL CARD ---
 const MiniIntelCard = ({ player, isMobile, onClose }) => {
   const [activeHero, setActiveHero] = useState(0);
-  
+
   if (isMobile) {
     return (
-      <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="absolute inset-0 bg-black/90 backdrop-blur-sm" />
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-[320px] bg-[#0c0c0c] border border-white/20 p-6 rounded-sm shadow-[0_0_40px_rgba(0,0,0,1)] font-mono overflow-hidden" onClick={(e) => e.stopPropagation()}>
+      <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 touch-none">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="absolute inset-0 bg-black/95 backdrop-blur-sm" />
+        <motion.div 
+          initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
+          className="relative w-full max-w-[320px] h-fit max-h-[85vh] bg-[#0c0c0c] border border-white/20 p-6 rounded-sm shadow-2xl font-mono flex flex-col overflow-hidden"
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="absolute top-0 left-0 w-full h-1 bg-red-600" />
-          <button onClick={onClose} className="absolute top-4 right-4 p-1 bg-white/5 rounded-full text-white/50 hover:text-white"><X size={18}/></button>
-          <div className="mb-6 text-left">
-            <p className="text-red-500 text-[8px] font-black uppercase tracking-[0.4em] mb-1 font-orbitron italic">Intel_Recovered</p>
+          <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/5 rounded-full text-white/50"><X size={20}/></button>
+          
+          <div className="mb-4 text-left">
+            <p className="text-red-500 text-[9px] font-black uppercase tracking-[0.3em] mb-1 font-orbitron">Intel_Recovered</p>
             <h5 className="text-white font-orbitron font-black text-2xl uppercase italic leading-none">{player.name}</h5>
           </div>
-          <div className="space-y-6">
-            <div className="bg-white/[0.03] p-4 border border-white/5 rounded-sm">
-              <div className="flex justify-between items-end mb-2">
+
+          <div className="space-y-6 overflow-y-auto pr-1">
+            <div className="bg-white/[0.03] p-4 border border-white/5">
+              <div className="flex justify-between items-baseline mb-2">
                 <span className="text-white/30 text-[9px] font-black uppercase tracking-widest">Efficiency</span>
-                <motion.span key={activeHero} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="text-white font-orbitron font-black text-3xl">{player.heroStats[activeHero].wr}</motion.span>
+                <motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-3xl">{player.heroStats[activeHero].wr}</motion.span>
               </div>
-              <div className="h-1 bg-white/10 w-full overflow-hidden">
-                <motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_10px_#dc2626]" />
+              <div className="h-1 bg-white/10 w-full rounded-full overflow-hidden">
+                <motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_10px_red]" />
               </div>
             </div>
+
             <div className="space-y-1.5 text-left">
               <p className="text-[8px] text-white/20 uppercase tracking-widest mb-2 font-black italic">// SELECT_UNIT</p>
               {player.heroStats.map((hero, idx) => (
-                <button key={hero.name} onClick={() => setActiveHero(idx)} className={`w-full flex items-center justify-between px-4 py-3 border text-[10px] font-black transition-all duration-300 ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40'}`}>
-                  <span className="uppercase tracking-widest">{hero.name}</span>
+                <button key={hero.name} onClick={() => setActiveHero(idx)} className={`w-full flex items-center justify-between px-4 py-3 border text-[10px] font-black transition-all ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40'}`}>
+                  <span className="uppercase">{hero.name}</span>
                   {activeHero === idx && <Target size={14} />}
                 </button>
               ))}
             </div>
           </div>
+
           <div className="mt-6 pt-4 border-t border-white/5 text-center"><p className="text-[7px] text-white/10 uppercase tracking-[0.3em]">Unit_Data_Stream_v2.0</p></div>
         </motion.div>
       </div>
     );
   }
 
+  // PC VERSION (UNCHANGED)
   const topVal = parseInt(player.lanePos?.top || 0);
   const leftVal = parseInt(player.lanePos?.left || 0);
   const verticalPos = topVal > 60 ? 'bottom-0' : 'top-0'; 
   const horizontalPos = leftVal > 50 ? 'right-full mr-4' : 'left-full ml-4';
-
   return (
-    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
-      className={`absolute ${verticalPos} ${horizontalPos} w-56 bg-black/95 backdrop-blur-xl border border-white/20 p-4 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.8)] z-[100] text-left font-mono pointer-events-auto`}
-      onClick={(e) => e.stopPropagation()}
-    >
+    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className={`absolute ${verticalPos} ${horizontalPos} w-56 bg-black/95 backdrop-blur-xl border border-white/20 p-4 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.8)] z-[100] text-left font-mono pointer-events-auto`} onClick={(e) => e.stopPropagation()}>
       <div className="mb-3 border-b border-white/10 pb-2 text-left">
         <span className="text-red-500 text-[8px] font-black uppercase tracking-widest block mb-1">Target_Acquired</span>
         <h5 className="text-white font-orbitron font-black text-base md:text-lg leading-none uppercase italic">{player.name}</h5>
       </div>
       <div className="space-y-4">
         <div>
-          <div className="flex justify-between items-end mb-1 text-left">
-            <span className="text-white/30 text-[8px] font-black uppercase">Win_Rate</span>
-            <motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-lg md:text-xl">{player.heroStats[activeHero].wr}</motion.span>
-          </div>
+          <div className="flex justify-between items-end mb-1 text-left"><span className="text-white/30 text-[8px] font-black uppercase">Win_Rate</span><motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-lg md:text-xl">{player.heroStats[activeHero].wr}</motion.span></div>
           <div className="h-1 bg-white/5 w-full"><motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_8px_red]" /></div>
         </div>
         <div className="grid grid-cols-1 gap-1">
           {player.heroStats.map((hero, idx) => (
-            <button key={hero.name} onMouseEnter={() => setActiveHero(idx)} className={`flex items-center justify-between px-2 py-1.5 border text-[8px] md:text-[9px] font-black transition-all ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40'}`}>
-              <span className="uppercase">{hero.name}</span>
-              {activeHero === idx && <Target size={10} />}
-            </button>
+            <button key={hero.name} onMouseEnter={() => setActiveHero(idx)} className={`flex items-center justify-between px-2 py-1.5 border text-[8px] md:text-[9px] font-black transition-all ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40'}`}><span className="uppercase">{hero.name}</span>{activeHero === idx && <Target size={10} />}</button>
           ))}
         </div>
       </div>
@@ -247,7 +247,7 @@ const PlayerJourney = () => {
                     {p.careerHistory.map((history, i) => (
                       <motion.div key={i} initial={{ x: -10, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.1 }} className="flex gap-8 relative z-10 group">
                         <div className="w-[23px] h-[23px] rounded-full bg-black border-2 border-white flex items-center justify-center shrink-0"><div className="w-1.5 h-1.5 bg-white rounded-full" /></div>
-                        <div className="font-mono pt-1"><p className="text-[10px] text-white/30 font-black mb-1">[{history.year}]</p><h4 className="text-white font-orbitron font-black uppercase text-base md:text-xl tracking-widest">{history.team}</h4><div className="w-8 h-[1px] bg-red-600 mt-2 group-hover:w-full transition-all duration-700 opacity-50" /></div>
+                        <div className="font-mono pt-1 text-left"><p className="text-[10px] text-white/30 font-black mb-1">[{history.year}]</p><h4 className="text-white font-orbitron font-black uppercase text-base md:text-xl tracking-widest">{history.team}</h4><div className="w-8 h-[1px] bg-red-600 mt-2 group-hover:w-full transition-all duration-700 opacity-50" /></div>
                       </motion.div>
                     ))}
                   </div>
@@ -267,7 +267,7 @@ const Roster = () => {
     <div className="bg-[#080808] min-h-screen">
       <section id="lineup" className="py-24 md:py-32 relative overflow-hidden text-left text-white">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="mb-16 text-left">
+          <div className="mb-16">
             <h2 className="text-7xl md:text-[120px] font-orbitron font-[900] text-white tracking-tighter uppercase italic leading-none">THE <br /> <span className="text-transparent" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.2)' }}>PERSONNEL</span></h2>
             <div className="flex flex-wrap gap-4 mt-12 border-b border-white/5 pb-8 font-mono">
               <button onClick={() => setActiveTab('roster')} className={`flex items-center gap-2 px-8 py-4 font-orbitron font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'roster' ? 'bg-white text-black' : 'text-white/30 hover:text-white'}`}><Users size={16}/> [ 01. Roster ]</button>
