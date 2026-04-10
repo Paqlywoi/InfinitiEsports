@@ -101,58 +101,46 @@ const PlayerCard = ({ player }) => {
   );
 };
 
-// --- REFINED INTEL CARD (POPUP FOR MOBILE, HOVER FOR PC) ---
 const MiniIntelCard = ({ player, isMobile, onClose }) => {
   const [activeHero, setActiveHero] = useState(0);
   
   if (isMobile) {
     return (
-      <div className="fixed inset-0 z-[110] flex items-center justify-center p-6">
-        <motion.div 
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-          onClick={onClose} className="absolute inset-0 bg-black/80 backdrop-blur-md"
-        />
-        <motion.div 
-          initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          className="relative w-full max-w-sm bg-zinc-900 border border-white/20 p-8 rounded-sm shadow-2xl font-mono"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/5 rounded-full text-white"><X size={20}/></button>
-          
-          <div className="mb-6 border-b border-white/10 pb-4 text-left">
-            <span className="text-red-500 text-[10px] font-black uppercase tracking-widest block mb-1 font-orbitron">Intel_Report</span>
-            <h5 className="text-white font-orbitron font-black text-3xl uppercase italic">{player.name}</h5>
+      <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="absolute inset-0 bg-black/90 backdrop-blur-sm" />
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-[320px] bg-[#0c0c0c] border border-white/20 p-6 rounded-sm shadow-[0_0_40px_rgba(0,0,0,1)] font-mono overflow-hidden" onClick={(e) => e.stopPropagation()}>
+          <div className="absolute top-0 left-0 w-full h-1 bg-red-600" />
+          <button onClick={onClose} className="absolute top-4 right-4 p-1 bg-white/5 rounded-full text-white/50 hover:text-white"><X size={18}/></button>
+          <div className="mb-6 text-left">
+            <p className="text-red-500 text-[8px] font-black uppercase tracking-[0.4em] mb-1 font-orbitron italic">Intel_Recovered</p>
+            <h5 className="text-white font-orbitron font-black text-2xl uppercase italic leading-none">{player.name}</h5>
           </div>
-
-          <div className="space-y-8 text-left">
-            <div>
+          <div className="space-y-6">
+            <div className="bg-white/[0.03] p-4 border border-white/5 rounded-sm">
               <div className="flex justify-between items-end mb-2">
-                <span className="text-white/30 text-[10px] font-black uppercase">Combat_Efficiency</span>
-                <motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-3xl">
-                  {player.heroStats[activeHero].wr}
-                </motion.span>
+                <span className="text-white/30 text-[9px] font-black uppercase tracking-widest">Efficiency</span>
+                <motion.span key={activeHero} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="text-white font-orbitron font-black text-3xl">{player.heroStats[activeHero].wr}</motion.span>
               </div>
-              <div className="h-2 bg-white/5 w-full rounded-full">
-                <motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_15px_red] rounded-full" />
+              <div className="h-1 bg-white/10 w-full overflow-hidden">
+                <motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_10px_#dc2626]" />
               </div>
             </div>
-
-            <div className="grid grid-cols-1 gap-2">
+            <div className="space-y-1.5 text-left">
+              <p className="text-[8px] text-white/20 uppercase tracking-widest mb-2 font-black italic">// SELECT_UNIT</p>
               {player.heroStats.map((hero, idx) => (
-                <button key={hero.name} onClick={() => setActiveHero(idx)}
-                  className={`flex items-center justify-between px-4 py-4 border text-xs font-black transition-all ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40'}`}>
-                  <span className="uppercase tracking-widest font-orbitron">{hero.name}</span>
-                  {activeHero === idx && <Target size={16} />}
+                <button key={hero.name} onClick={() => setActiveHero(idx)} className={`w-full flex items-center justify-between px-4 py-3 border text-[10px] font-black transition-all duration-300 ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40'}`}>
+                  <span className="uppercase tracking-widest">{hero.name}</span>
+                  {activeHero === idx && <Target size={14} />}
                 </button>
               ))}
             </div>
           </div>
+          <div className="mt-6 pt-4 border-t border-white/5 text-center"><p className="text-[7px] text-white/10 uppercase tracking-[0.3em]">Unit_Data_Stream_v2.0</p></div>
         </motion.div>
       </div>
     );
   }
 
-  // DESKTOP HOVER VIEW (UNTOUCHED AS REQUESTED)
   const topVal = parseInt(player.lanePos?.top || 0);
   const leftVal = parseInt(player.lanePos?.left || 0);
   const verticalPos = topVal > 60 ? 'bottom-0' : 'top-0'; 
@@ -160,7 +148,8 @@ const MiniIntelCard = ({ player, isMobile, onClose }) => {
 
   return (
     <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
-      className={`absolute ${verticalPos} ${horizontalPos} w-56 bg-black/95 backdrop-blur-xl border border-white/20 p-4 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.8)] z-[100] text-left font-mono`}
+      className={`absolute ${verticalPos} ${horizontalPos} w-56 bg-black/95 backdrop-blur-xl border border-white/20 p-4 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.8)] z-[100] text-left font-mono pointer-events-auto`}
+      onClick={(e) => e.stopPropagation()}
     >
       <div className="mb-3 border-b border-white/10 pb-2 text-left">
         <span className="text-red-500 text-[8px] font-black uppercase tracking-widest block mb-1">Target_Acquired</span>
@@ -170,18 +159,13 @@ const MiniIntelCard = ({ player, isMobile, onClose }) => {
         <div>
           <div className="flex justify-between items-end mb-1 text-left">
             <span className="text-white/30 text-[8px] font-black uppercase">Win_Rate</span>
-            <motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-lg md:text-xl">
-              {player.heroStats[activeHero].wr}
-            </motion.span>
+            <motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-lg md:text-xl">{player.heroStats[activeHero].wr}</motion.span>
           </div>
-          <div className="h-1 bg-white/5 w-full">
-            <motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_8px_red]" />
-          </div>
+          <div className="h-1 bg-white/5 w-full"><motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_8px_red]" /></div>
         </div>
         <div className="grid grid-cols-1 gap-1">
           {player.heroStats.map((hero, idx) => (
-            <button key={hero.name} onMouseEnter={() => setActiveHero(idx)}
-              className={`flex items-center justify-between px-2 py-1.5 border text-[8px] md:text-[9px] font-black transition-all ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40'}`}>
+            <button key={hero.name} onMouseEnter={() => setActiveHero(idx)} className={`flex items-center justify-between px-2 py-1.5 border text-[8px] md:text-[9px] font-black transition-all ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40'}`}>
               <span className="uppercase">{hero.name}</span>
               {activeHero === idx && <Target size={10} />}
             </button>
@@ -208,70 +192,34 @@ const TacticalMap = () => {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 font-mono text-white text-left">
           <div className="flex gap-2">
-            <button onClick={() => { setViewMode('position'); setActivePlayer(null); }}
-              className={`flex items-center gap-2 px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all border ${viewMode === 'position' ? 'bg-white text-black border-white' : 'bg-transparent text-white/40 border-white/10'}`}>
-              <MapIcon size={14} /> Position_View
-            </button>
-            <button onClick={() => { setViewMode('heatmap'); setActivePlayer(null); }}
-              className={`flex items-center gap-2 px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all border ${viewMode === 'heatmap' ? 'bg-white text-black border-white shadow-lg shadow-white/5' : 'bg-transparent text-white/40 border-white/10'}`}>
-              <Flame size={14} /> Heat_Map
-            </button>
+            <button onClick={() => { setViewMode('position'); setActivePlayer(null); }} className={`flex items-center gap-2 px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all border ${viewMode === 'position' ? 'bg-white text-black border-white' : 'bg-transparent text-white/40 border-white/10'}`}><MapIcon size={14} /> Position_View</button>
+            <button onClick={() => { setViewMode('heatmap'); setActivePlayer(null); }} className={`flex items-center gap-2 px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all border ${viewMode === 'heatmap' ? 'bg-white text-black border-white shadow-lg shadow-white/5' : 'bg-transparent text-white/40 border-white/10'}`}><Flame size={14} /> Heat_Map</button>
           </div>
-          <p className="text-[9px] text-white/20 font-black tracking-[0.4em] uppercase italic">
-            {isMobile ? '[ TAP_UNIT_FOR_INTEL ]' : '[ HOVER_UNIT_FOR_INTEL ]'}
-          </p>
+          <p className="text-[9px] text-white/20 font-black tracking-[0.4em] uppercase italic">{isMobile ? '[ TAP_UNIT_FOR_INTEL ]' : '[ HOVER_UNIT_FOR_INTEL ]'}</p>
         </div>
 
         <div className="relative aspect-square md:aspect-video w-full bg-black border border-white/10 rounded-sm shadow-2xl overflow-visible px-4">
           <div className="relative w-full h-full overflow-hidden rounded-sm">
              <img src="/MapML.jpg" className={`w-full h-full object-cover transition-all duration-1000 ${viewMode === 'heatmap' ? 'brightness-[0.4] contrast-125 saturate-150' : 'opacity-40 grayscale'}`} alt="map" />
-             
              <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
                 <AnimatePresence>
                    {viewMode === 'heatmap' && mainPlayers.map((p) => {
                      const isHighlighted = activePlayer?.id === p.id;
                      const showPath = !activePlayer || isHighlighted;
                      const opacityVal = activePlayer ? (isHighlighted ? 0.8 : 0) : 0.2;
-
                      return (showPath && (
-                       <motion.path
-                           key={`heat-${p.id}`} d={p.heatPath} initial={{ pathLength: 0, opacity: 0 }}
-                           animate={{ pathLength: 1, opacity: opacityVal }} exit={{ opacity: 0 }}
-                           stroke={p.heatColor} 
-                           // REFINED HEATMAP FOR MOBILE (Smaller strokeWidth)
-                           strokeWidth={isMobile ? "6" : "12"} 
-                           strokeLinecap="round" fill="none"
-                           style={{ filter: isHighlighted ? `blur(8px) drop-shadow(0 0 15px ${p.heatColor})` : `blur(10px)` }}
-                           transition={{ duration: 0.5 }}
-                       />
+                       <motion.path key={`heat-${p.id}`} d={p.heatPath} initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: opacityVal }} exit={{ opacity: 0 }} stroke={p.heatColor} strokeWidth={isMobile ? "6" : "12"} strokeLinecap="round" fill="none" style={{ filter: isHighlighted ? `blur(8px) drop-shadow(0 0 15px ${p.heatColor})` : `blur(10px)` }} transition={{ duration: 0.5 }} />
                      ));
                    })}
                 </AnimatePresence>
              </svg>
           </div>
-
           {mainPlayers.map((p) => (
-            <div 
-              key={p.id} 
-              onMouseEnter={() => !isMobile && setActivePlayer(p)}
-              onMouseLeave={() => !isMobile && setActivePlayer(null)}
-              onClick={() => isMobile && setActivePlayer(activePlayer?.id === p.id ? null : p)}
-              className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-crosshair transition-all duration-300 ${activePlayer?.id === p.id ? 'z-[100]' : 'z-30'}`} 
-              style={{ top: p.lanePos.top, left: p.lanePos.left }}
-            >
+            <div key={p.id} onMouseEnter={() => !isMobile && setActivePlayer(p)} onMouseLeave={() => !isMobile && setActivePlayer(null)} onClick={() => isMobile && setActivePlayer(activePlayer?.id === p.id ? null : p)} className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-crosshair transition-all duration-300 ${activePlayer?.id === p.id ? 'z-[100]' : 'z-30'}`} style={{ top: p.lanePos.top, left: p.lanePos.left }}>
               <motion.div layout className={`p-1 rounded-full border-2 transition-all duration-500 ${activePlayer?.id === p.id ? 'border-white bg-white/20 shadow-[0_0_25px_white] scale-110' : 'border-white/50 bg-black'}`}>
                 <img src={p.img} className={`w-10 h-10 md:w-14 md:h-14 rounded-full object-cover transition-all duration-300 ${viewMode === 'heatmap' ? 'grayscale-0 brightness-110' : 'grayscale group-hover:grayscale-0'}`} alt="pin" />
               </motion.div>
-
-              <AnimatePresence>
-                {viewMode === 'position' && activePlayer?.id === p.id && (
-                  <MiniIntelCard 
-                    player={p} 
-                    isMobile={isMobile} 
-                    onClose={() => setActivePlayer(null)}
-                  />
-                )}
-              </AnimatePresence>
+              <AnimatePresence>{viewMode === 'position' && activePlayer?.id === p.id && <MiniIntelCard player={p} isMobile={isMobile} onClose={() => setActivePlayer(null)} />}</AnimatePresence>
             </div>
           ))}
         </div>
@@ -288,10 +236,7 @@ const PlayerJourney = () => {
       {players.map((p) => (
         <div key={p.id} className="border border-white/10 overflow-hidden bg-white/[0.01]">
           <button onClick={() => toggleFile(p.id)} className={`w-full flex items-center justify-between p-5 transition-all duration-500 font-mono text-xs md:text-sm uppercase tracking-widest ${openFileId === p.id ? 'bg-white text-black font-black' : 'hover:bg-white/5 text-white/60'}`}>
-            <div className="flex items-center gap-4">
-              <FileText size={18} className={openFileId === p.id ? 'text-black' : 'text-white/20'} />
-              <span>{p.name}.ARC {p.isSub && '(SUB)'}</span>
-            </div>
+            <div className="flex items-center gap-4"><FileText size={18} className={openFileId === p.id ? 'text-black' : 'text-white/20'} /><span>{p.name}.ARC {p.isSub && '(SUB)'}</span></div>
             <motion.div animate={{ rotate: openFileId === p.id ? 90 : 0 }} transition={{ duration: 0.3 }}><ChevronRight size={16}/></motion.div>
           </button>
           <AnimatePresence>
@@ -301,14 +246,8 @@ const PlayerJourney = () => {
                   <div className="space-y-10 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[1px] before:bg-white/10">
                     {p.careerHistory.map((history, i) => (
                       <motion.div key={i} initial={{ x: -10, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.1 }} className="flex gap-8 relative z-10 group">
-                        <div className="w-[23px] h-[23px] rounded-full bg-black border-2 border-white flex items-center justify-center shrink-0">
-                          <div className="w-1.5 h-1.5 bg-white rounded-full" />
-                        </div>
-                        <div className="font-mono pt-1">
-                          <p className="text-[10px] text-white/30 font-black mb-1">[{history.year}]</p>
-                          <h4 className="text-white font-orbitron font-black uppercase text-base md:text-xl tracking-widest">{history.team}</h4>
-                          <div className="w-8 h-[1px] bg-red-600 mt-2 group-hover:w-full transition-all duration-700 opacity-50" />
-                        </div>
+                        <div className="w-[23px] h-[23px] rounded-full bg-black border-2 border-white flex items-center justify-center shrink-0"><div className="w-1.5 h-1.5 bg-white rounded-full" /></div>
+                        <div className="font-mono pt-1"><p className="text-[10px] text-white/30 font-black mb-1">[{history.year}]</p><h4 className="text-white font-orbitron font-black uppercase text-base md:text-xl tracking-widest">{history.team}</h4><div className="w-8 h-[1px] bg-red-600 mt-2 group-hover:w-full transition-all duration-700 opacity-50" /></div>
                       </motion.div>
                     ))}
                   </div>
@@ -328,7 +267,7 @@ const Roster = () => {
     <div className="bg-[#080808] min-h-screen">
       <section id="lineup" className="py-24 md:py-32 relative overflow-hidden text-left text-white">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="mb-16">
+          <div className="mb-16 text-left">
             <h2 className="text-7xl md:text-[120px] font-orbitron font-[900] text-white tracking-tighter uppercase italic leading-none">THE <br /> <span className="text-transparent" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.2)' }}>PERSONNEL</span></h2>
             <div className="flex flex-wrap gap-4 mt-12 border-b border-white/5 pb-8 font-mono">
               <button onClick={() => setActiveTab('roster')} className={`flex items-center gap-2 px-8 py-4 font-orbitron font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'roster' ? 'bg-white text-black' : 'text-white/30 hover:text-white'}`}><Users size={16}/> [ 01. Roster ]</button>
@@ -337,11 +276,7 @@ const Roster = () => {
             </div>
           </div>
           <AnimatePresence mode="wait">
-            {activeTab === 'roster' && (
-              <motion.div key="roster" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {players.map((player) => <PlayerCard key={player.id} player={player} />)}
-              </motion.div>
-            )}
+            {activeTab === 'roster' && (<motion.div key="roster" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">{players.map((player) => <PlayerCard key={player.id} player={player} />)}</motion.div>)}
             {activeTab === 'strat' && <TacticalMap key="strat" />}
             {activeTab === 'journey' && <PlayerJourney key="journey" />}
           </AnimatePresence>
