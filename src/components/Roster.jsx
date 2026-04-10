@@ -101,46 +101,76 @@ const PlayerCard = ({ player }) => {
   );
 };
 
-// --- MINI INTEL CARD (MOBILE REFINED) ---
-const MiniIntelCard = ({ player, isMobile }) => {
+// --- REFINED INTEL CARD (POPUP FOR MOBILE, HOVER FOR PC) ---
+const MiniIntelCard = ({ player, isMobile, onClose }) => {
   const [activeHero, setActiveHero] = useState(0);
+  
+  if (isMobile) {
+    return (
+      <div className="fixed inset-0 z-[110] flex items-center justify-center p-6">
+        <motion.div 
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          onClick={onClose} className="absolute inset-0 bg-black/80 backdrop-blur-md"
+        />
+        <motion.div 
+          initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 20 }}
+          className="relative w-full max-w-sm bg-zinc-900 border border-white/20 p-8 rounded-sm shadow-2xl font-mono"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/5 rounded-full text-white"><X size={20}/></button>
+          
+          <div className="mb-6 border-b border-white/10 pb-4 text-left">
+            <span className="text-red-500 text-[10px] font-black uppercase tracking-widest block mb-1 font-orbitron">Intel_Report</span>
+            <h5 className="text-white font-orbitron font-black text-3xl uppercase italic">{player.name}</h5>
+          </div>
+
+          <div className="space-y-8 text-left">
+            <div>
+              <div className="flex justify-between items-end mb-2">
+                <span className="text-white/30 text-[10px] font-black uppercase">Combat_Efficiency</span>
+                <motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-3xl">
+                  {player.heroStats[activeHero].wr}
+                </motion.span>
+              </div>
+              <div className="h-2 bg-white/5 w-full rounded-full">
+                <motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_15px_red] rounded-full" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-2">
+              {player.heroStats.map((hero, idx) => (
+                <button key={hero.name} onClick={() => setActiveHero(idx)}
+                  className={`flex items-center justify-between px-4 py-4 border text-xs font-black transition-all ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40'}`}>
+                  <span className="uppercase tracking-widest font-orbitron">{hero.name}</span>
+                  {activeHero === idx && <Target size={16} />}
+                </button>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // DESKTOP HOVER VIEW (UNTOUCHED AS REQUESTED)
   const topVal = parseInt(player.lanePos?.top || 0);
   const leftVal = parseInt(player.lanePos?.left || 0);
-
   const verticalPos = topVal > 60 ? 'bottom-0' : 'top-0'; 
   const horizontalPos = leftVal > 50 ? 'right-full mr-4' : 'left-full ml-4';
 
-  const mobileStyle = isMobile ? {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '85vw',
-    maxWidth: '300px',
-    zIndex: 1000,
-  } : {};
-
   return (
-    <motion.div 
-      initial={{ opacity: 0, scale: 0.9, y: isMobile ? 20 : 0 }} 
-      animate={{ opacity: 1, scale: 1, y: isMobile ? 0 : 0 }} 
-      exit={{ opacity: 0, scale: 0.9 }}
-      style={mobileStyle}
-      onClick={(e) => e.stopPropagation()} // Fix hero switching on mobile
-      className={`${!isMobile ? `absolute ${verticalPos} ${horizontalPos} w-56` : ''} bg-black/95 backdrop-blur-xl border border-white/20 p-5 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.9)] z-[100] text-left font-mono`}
+    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
+      className={`absolute ${verticalPos} ${horizontalPos} w-56 bg-black/95 backdrop-blur-xl border border-white/20 p-4 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.8)] z-[100] text-left font-mono`}
     >
-      <div className="mb-4 border-b border-white/10 pb-2 flex justify-between items-start">
-        <div>
-          <span className="text-red-500 text-[8px] font-black uppercase tracking-widest block mb-1">Target_Acquired</span>
-          <h5 className="text-white font-orbitron font-black text-lg leading-none uppercase italic">{player.name}</h5>
-        </div>
+      <div className="mb-3 border-b border-white/10 pb-2 text-left">
+        <span className="text-red-500 text-[8px] font-black uppercase tracking-widest block mb-1">Target_Acquired</span>
+        <h5 className="text-white font-orbitron font-black text-base md:text-lg leading-none uppercase italic">{player.name}</h5>
       </div>
-
-      <div className="space-y-5">
+      <div className="space-y-4">
         <div>
-          <div className="flex justify-between items-end mb-1">
+          <div className="flex justify-between items-end mb-1 text-left">
             <span className="text-white/30 text-[8px] font-black uppercase">Win_Rate</span>
-            <motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-xl">
+            <motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-lg md:text-xl">
               {player.heroStats[activeHero].wr}
             </motion.span>
           </div>
@@ -148,21 +178,15 @@ const MiniIntelCard = ({ player, isMobile }) => {
             <motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_8px_red]" />
           </div>
         </div>
-
-        <div className="grid grid-cols-1 gap-1.5">
+        <div className="grid grid-cols-1 gap-1">
           {player.heroStats.map((hero, idx) => (
-            <button 
-              key={hero.name} 
-              onClick={() => setActiveHero(idx)}
-              onMouseEnter={() => !isMobile && setActiveHero(idx)}
-              className={`flex items-center justify-between px-3 py-2 border text-[9px] font-black transition-all ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40 active:bg-white/10'}`}
-            >
+            <button key={hero.name} onMouseEnter={() => setActiveHero(idx)}
+              className={`flex items-center justify-between px-2 py-1.5 border text-[8px] md:text-[9px] font-black transition-all ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40'}`}>
               <span className="uppercase">{hero.name}</span>
-              {activeHero === idx && <Target size={12} />}
+              {activeHero === idx && <Target size={10} />}
             </button>
           ))}
         </div>
-        {isMobile && <p className="text-[7px] text-center text-white/20 uppercase tracking-widest pt-2 italic">Tap outside to dismiss</p>}
       </div>
     </motion.div>
   );
@@ -182,16 +206,6 @@ const TacticalMap = () => {
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full">
-        <AnimatePresence>
-          {isMobile && activePlayer && (
-            <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              onClick={() => setActivePlayer(null)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90]"
-            />
-          )}
-        </AnimatePresence>
-
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 font-mono text-white text-left">
           <div className="flex gap-2">
             <button onClick={() => { setViewMode('position'); setActivePlayer(null); }}
@@ -211,17 +225,22 @@ const TacticalMap = () => {
         <div className="relative aspect-square md:aspect-video w-full bg-black border border-white/10 rounded-sm shadow-2xl overflow-visible px-4">
           <div className="relative w-full h-full overflow-hidden rounded-sm">
              <img src="/MapML.jpg" className={`w-full h-full object-cover transition-all duration-1000 ${viewMode === 'heatmap' ? 'brightness-[0.4] contrast-125 saturate-150' : 'opacity-40 grayscale'}`} alt="map" />
+             
              <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
                 <AnimatePresence>
                    {viewMode === 'heatmap' && mainPlayers.map((p) => {
                      const isHighlighted = activePlayer?.id === p.id;
                      const showPath = !activePlayer || isHighlighted;
                      const opacityVal = activePlayer ? (isHighlighted ? 0.8 : 0) : 0.2;
+
                      return (showPath && (
                        <motion.path
                            key={`heat-${p.id}`} d={p.heatPath} initial={{ pathLength: 0, opacity: 0 }}
                            animate={{ pathLength: 1, opacity: opacityVal }} exit={{ opacity: 0 }}
-                           stroke={p.heatColor} strokeWidth="12" strokeLinecap="round" fill="none"
+                           stroke={p.heatColor} 
+                           // REFINED HEATMAP FOR MOBILE (Smaller strokeWidth)
+                           strokeWidth={isMobile ? "6" : "12"} 
+                           strokeLinecap="round" fill="none"
                            style={{ filter: isHighlighted ? `blur(8px) drop-shadow(0 0 15px ${p.heatColor})` : `blur(10px)` }}
                            transition={{ duration: 0.5 }}
                        />
@@ -236,18 +255,22 @@ const TacticalMap = () => {
               key={p.id} 
               onMouseEnter={() => !isMobile && setActivePlayer(p)}
               onMouseLeave={() => !isMobile && setActivePlayer(null)}
-              onClick={(e) => {
-                e.stopPropagation();
-                setActivePlayer(activePlayer?.id === p.id ? null : p);
-              }}
+              onClick={() => isMobile && setActivePlayer(activePlayer?.id === p.id ? null : p)}
               className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-crosshair transition-all duration-300 ${activePlayer?.id === p.id ? 'z-[100]' : 'z-30'}`} 
               style={{ top: p.lanePos.top, left: p.lanePos.left }}
             >
               <motion.div layout className={`p-1 rounded-full border-2 transition-all duration-500 ${activePlayer?.id === p.id ? 'border-white bg-white/20 shadow-[0_0_25px_white] scale-110' : 'border-white/50 bg-black'}`}>
                 <img src={p.img} className={`w-10 h-10 md:w-14 md:h-14 rounded-full object-cover transition-all duration-300 ${viewMode === 'heatmap' ? 'grayscale-0 brightness-110' : 'grayscale group-hover:grayscale-0'}`} alt="pin" />
               </motion.div>
+
               <AnimatePresence>
-                {viewMode === 'position' && activePlayer?.id === p.id && <MiniIntelCard player={p} isMobile={isMobile} />}
+                {viewMode === 'position' && activePlayer?.id === p.id && (
+                  <MiniIntelCard 
+                    player={p} 
+                    isMobile={isMobile} 
+                    onClose={() => setActivePlayer(null)}
+                  />
+                )}
               </AnimatePresence>
             </div>
           ))}
@@ -259,7 +282,6 @@ const TacticalMap = () => {
 const PlayerJourney = () => {
   const [openFileId, setOpenFileId] = useState(null);
   const toggleFile = (id) => setOpenFileId(openFileId === id ? null : id);
-
   return (
     <div className="py-10 max-w-4xl mx-auto space-y-4 text-white text-left">
       <p className="text-[10px] font-orbitron font-black text-white/20 uppercase tracking-[0.5em] mb-8 font-rajdhani">Unit_Archive_Logs //</p>
@@ -270,21 +292,22 @@ const PlayerJourney = () => {
               <FileText size={18} className={openFileId === p.id ? 'text-black' : 'text-white/20'} />
               <span>{p.name}.ARC {p.isSub && '(SUB)'}</span>
             </div>
-            <motion.div animate={{ rotate: openFileId === p.id ? 90 : 0 }} transition={{ duration: 0.3 }}><ChevronRight size={16} /></motion.div>
+            <motion.div animate={{ rotate: openFileId === p.id ? 90 : 0 }} transition={{ duration: 0.3 }}><ChevronRight size={16}/></motion.div>
           </button>
           <AnimatePresence>
             {openFileId === p.id && (
               <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4, ease: "circOut" }} className="overflow-hidden">
-                <div className="p-8 md:p-12 bg-black/40 border-t border-white/5">
+                <div className="p-8 md:p-12 bg-black/40 border-t border-white/5 text-left">
                   <div className="space-y-10 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[1px] before:bg-white/10">
                     {p.careerHistory.map((history, i) => (
                       <motion.div key={i} initial={{ x: -10, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.1 }} className="flex gap-8 relative z-10 group">
                         <div className="w-[23px] h-[23px] rounded-full bg-black border-2 border-white flex items-center justify-center shrink-0">
                           <div className="w-1.5 h-1.5 bg-white rounded-full" />
                         </div>
-                        <div className="font-mono pt-1 text-left">
+                        <div className="font-mono pt-1">
                           <p className="text-[10px] text-white/30 font-black mb-1">[{history.year}]</p>
                           <h4 className="text-white font-orbitron font-black uppercase text-base md:text-xl tracking-widest">{history.team}</h4>
+                          <div className="w-8 h-[1px] bg-red-600 mt-2 group-hover:w-full transition-all duration-700 opacity-50" />
                         </div>
                       </motion.div>
                     ))}
@@ -308,9 +331,9 @@ const Roster = () => {
           <div className="mb-16">
             <h2 className="text-7xl md:text-[120px] font-orbitron font-[900] text-white tracking-tighter uppercase italic leading-none">THE <br /> <span className="text-transparent" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.2)' }}>PERSONNEL</span></h2>
             <div className="flex flex-wrap gap-4 mt-12 border-b border-white/5 pb-8 font-mono">
-              <button onClick={() => setActiveTab('roster')} className={`flex items-center gap-2 px-8 py-4 font-orbitron font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'roster' ? 'bg-white text-black' : 'text-white/30 hover:text-white'}`}><Users size={16} /> [ 01. Roster ]</button>
-              <button onClick={() => setActiveTab('strat')} className={`flex items-center gap-2 px-8 py-4 font-orbitron font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'strat' ? 'bg-white text-black shadow-lg shadow-white/5' : 'text-white/30 hover:text-white'}`}><MapIcon size={16} /> [ 02. Map_Strat ]</button>
-              <button onClick={() => setActiveTab('journey')} className={`flex items-center gap-2 px-8 py-4 font-orbitron font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'journey' ? 'bg-white text-black' : 'text-white/30 hover:text-white'}`}><History size={16} /> [ 03. Player_Journey ]</button>
+              <button onClick={() => setActiveTab('roster')} className={`flex items-center gap-2 px-8 py-4 font-orbitron font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'roster' ? 'bg-white text-black' : 'text-white/30 hover:text-white'}`}><Users size={16}/> [ 01. Roster ]</button>
+              <button onClick={() => setActiveTab('strat')} className={`flex items-center gap-2 px-8 py-4 font-orbitron font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'strat' ? 'bg-white text-black shadow-lg shadow-white/5' : 'text-white/30 hover:text-white'}`}><MapIcon size={16}/> [ 02. Map_Strat ]</button>
+              <button onClick={() => setActiveTab('journey')} className={`flex items-center gap-2 px-8 py-4 font-orbitron font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'journey' ? 'bg-white text-black' : 'text-white/30 hover:text-white'}`}><History size={16}/> [ 03. Player_Journey ]</button>
             </div>
           </div>
           <AnimatePresence mode="wait">
