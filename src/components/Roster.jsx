@@ -101,50 +101,53 @@ const PlayerCard = ({ player }) => {
   );
 };
 
-// --- FIX: NO-STRETCH INTEL CARD ---
+// --- FIX: ABSOLUTE POPUP FOR MOBILE ---
 const MiniIntelCard = ({ player, isMobile, onClose }) => {
   const [activeHero, setActiveHero] = useState(0);
 
   if (isMobile) {
     return (
-      <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 touch-none">
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="absolute inset-0 bg-black/95 backdrop-blur-sm" />
+      <div className="fixed inset-0 z-[999] flex items-center justify-center p-4">
+        {/* Dark Backdrop */}
+        <div onClick={onClose} className="absolute inset-0 bg-black/90 backdrop-blur-sm" />
+        
+        {/* Solid Content Box */}
         <motion.div 
-          initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
-          className="relative w-full max-w-[320px] h-fit max-h-[85vh] bg-[#0c0c0c] border border-white/20 p-6 rounded-sm shadow-2xl font-mono flex flex-col overflow-hidden"
+          initial={{ scale: 0.9, opacity: 0 }} 
+          animate={{ scale: 1, opacity: 1 }}
+          className="relative w-full max-w-[300px] bg-[#0c0c0c] border-2 border-white/20 p-6 rounded-sm shadow-2xl font-mono"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="absolute top-0 left-0 w-full h-1 bg-red-600" />
-          <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/5 rounded-full text-white/50"><X size={20}/></button>
+          <button onClick={onClose} className="absolute -top-3 -right-3 p-2 bg-white text-black rounded-full shadow-lg z-50">
+            <X size={16}/>
+          </button>
           
-          <div className="mb-4 text-left">
-            <p className="text-red-500 text-[9px] font-black uppercase tracking-[0.3em] mb-1 font-orbitron">Intel_Recovered</p>
-            <h5 className="text-white font-orbitron font-black text-2xl uppercase italic leading-none">{player.name}</h5>
+          <div className="mb-4 border-b border-white/10 pb-2 text-left">
+            <p className="text-red-500 text-[10px] font-black uppercase tracking-widest mb-1">INTEL_REPORT</p>
+            <h5 className="text-white font-orbitron font-black text-2xl uppercase italic">{player.name}</h5>
           </div>
 
-          <div className="space-y-6 overflow-y-auto pr-1">
-            <div className="bg-white/[0.03] p-4 border border-white/5">
-              <div className="flex justify-between items-baseline mb-2">
-                <span className="text-white/30 text-[9px] font-black uppercase tracking-widest">Efficiency</span>
-                <motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-3xl">{player.heroStats[activeHero].wr}</motion.span>
-              </div>
-              <div className="h-1 bg-white/10 w-full rounded-full overflow-hidden">
-                <motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_10px_red]" />
-              </div>
+          <div className="space-y-6 text-left">
+            <div className="bg-white/5 p-4 rounded-sm">
+               <div className="flex justify-between items-end mb-1">
+                  <span className="text-white/30 text-[9px] uppercase font-black">Efficiency</span>
+                  <span className="text-white font-orbitron font-black text-2xl">{player.heroStats[activeHero].wr}</span>
+               </div>
+               <div className="h-1 bg-white/10 w-full overflow-hidden">
+                  <motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_10px_red]" />
+               </div>
             </div>
 
-            <div className="space-y-1.5 text-left">
-              <p className="text-[8px] text-white/20 uppercase tracking-widest mb-2 font-black italic">// SELECT_UNIT</p>
+            <div className="grid grid-cols-1 gap-2">
               {player.heroStats.map((hero, idx) => (
-                <button key={hero.name} onClick={() => setActiveHero(idx)} className={`w-full flex items-center justify-between px-4 py-3 border text-[10px] font-black transition-all ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40'}`}>
+                <button key={hero.name} onClick={() => setActiveHero(idx)}
+                  className={`flex items-center justify-between px-4 py-3 border text-[10px] font-black transition-all ${activeHero === idx ? 'bg-white text-black' : 'bg-transparent text-white/40 border-white/5'}`}>
                   <span className="uppercase">{hero.name}</span>
                   {activeHero === idx && <Target size={14} />}
                 </button>
               ))}
             </div>
           </div>
-
-          <div className="mt-6 pt-4 border-t border-white/5 text-center"><p className="text-[7px] text-white/10 uppercase tracking-[0.3em]">Unit_Data_Stream_v2.0</p></div>
         </motion.div>
       </div>
     );
@@ -215,18 +218,27 @@ const TacticalMap = () => {
              </svg>
           </div>
           {mainPlayers.map((p) => (
-            <div key={p.id} onMouseEnter={() => !isMobile && setActivePlayer(p)} onMouseLeave={() => !isMobile && setActivePlayer(null)} onClick={() => isMobile && setActivePlayer(activePlayer?.id === p.id ? null : p)} className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-crosshair transition-all duration-300 ${activePlayer?.id === p.id ? 'z-[100]' : 'z-30'}`} style={{ top: p.lanePos.top, left: p.lanePos.left }}>
+            <div key={p.id} onClick={() => isMobile && setActivePlayer(p)} onMouseEnter={() => !isMobile && setActivePlayer(p)} onMouseLeave={() => !isMobile && setActivePlayer(null)} className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-crosshair transition-all duration-300 ${activePlayer?.id === p.id ? 'z-[100]' : 'z-30'}`} style={{ top: p.lanePos.top, left: p.lanePos.left }}>
               <motion.div layout className={`p-1 rounded-full border-2 transition-all duration-500 ${activePlayer?.id === p.id ? 'border-white bg-white/20 shadow-[0_0_25px_white] scale-110' : 'border-white/50 bg-black'}`}>
                 <img src={p.img} className={`w-10 h-10 md:w-14 md:h-14 rounded-full object-cover transition-all duration-300 ${viewMode === 'heatmap' ? 'grayscale-0 brightness-110' : 'grayscale group-hover:grayscale-0'}`} alt="pin" />
               </motion.div>
-              <AnimatePresence>{viewMode === 'position' && activePlayer?.id === p.id && <MiniIntelCard player={p} isMobile={isMobile} onClose={() => setActivePlayer(null)} />}</AnimatePresence>
+              {/* PC Version Inline */}
+              <AnimatePresence>{!isMobile && viewMode === 'position' && activePlayer?.id === p.id && <MiniIntelCard player={p} isMobile={false} onClose={() => setActivePlayer(null)} />}</AnimatePresence>
             </div>
           ))}
         </div>
+
+        {/* MOBILE POPUP OUTSIDE MAP FLOW */}
+        <AnimatePresence>
+           {isMobile && activePlayer && viewMode === 'position' && (
+             <MiniIntelCard player={activePlayer} isMobile={true} onClose={() => setActivePlayer(null)} />
+           )}
+        </AnimatePresence>
     </motion.div>
   );
 };
 
+// ... PlayerJourney and Roster stay the same ...
 const PlayerJourney = () => {
   const [openFileId, setOpenFileId] = useState(null);
   const toggleFile = (id) => setOpenFileId(openFileId === id ? null : id);
