@@ -157,7 +157,7 @@ function App() {
             </div>
             
             <div className="text-[8px] text-white/10 tracking-[0.2em] uppercase font-bold">
-              © 2026 INFINITI ESPORTS • Developed_By_Haziq_Fakhri
+              © 2026 INFINITI ESPORTS • ALL RIGHT RESERVED
             </div>
 
             <div className="flex gap-4">
