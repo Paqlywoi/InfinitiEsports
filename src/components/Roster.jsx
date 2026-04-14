@@ -1,33 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, X, BarChart3, Target, Map as MapIcon, Flame, Users, History, FileText, ChevronRight } from 'lucide-react';
+import { User, X, BarChart3, Target, Map as MapIcon, Flame, Users, History, FileText, ChevronRight, Zap, DollarSign, ShieldAlert, Activity, Sword, Users2 } from 'lucide-react';
 
 const players = [
   { id: 1, name: 'SOMALI', role: 'EXP LANER', signature: 'Ruby', topHeroes: ['Ruby', 'Alice', 'Gloo'], quote: "Discipline is the key to victory.", img: '/SomaliRaw.png', stats: { mechanics: 85, mapSense: 90, aggression: 95, teamwork: 80, pool: 88 }, lanePos: { top: '25%', left: '15%' }, heroStats: [{ name: 'Ruby', wr: '78%' }, { name: 'Alice', wr: '72%' }, { name: 'Gloo', wr: '65%' }], 
-    heatPath: "M 10 10 L 40 10 L 40 40 L 10 40 Z M 25 25 L 35 35 L 50 50", heatColor: "#fbbf24",
-    careerHistory: [{ year: '2021', team: 'infiniti Esports o2' }, { year: '2026', team: 'Infiniti Reborn' }]
+    careerHistory: [{ year: '2021', team: 'infiniti Esports o2' }, { year: '2026', team: 'Infiniti Reborn' }],
+    combat: { savage: 2, maniac: 12, gold: 10500, sandbag: 95, teamfight: 65, damage: 450000 },
+    heatPath: "M 10 10 L 40 10 L 40 40 L 10 40 Z M 25 25 L 35 35 L 50 50", heatColor: "#fbbf24"
   },
   { id: 2, name: 'RULZ', role: 'JUNGLER', signature: 'Hayabusa', topHeroes: ['Hayabusa', 'Ling', 'Yi Sun Shin'], quote: "Speed is nothing without precision.", img: '/RulzRaw.png', stats: { mechanics: 98, mapSense: 85, aggression: 92, teamwork: 75, pool: 80 }, lanePos: { top: '55%', left: '32%' }, heroStats: [{ name: 'Hayabusa', wr: '85%' }, { name: 'Ling', wr: '79%' }, { name: 'Yi Sun Shin', wr: '74%' }], 
-    heatPath: "M 30 30 L 70 30 L 70 70 L 30 70 Z M 40 40 L 60 60 M 35 35 L 65 65", heatColor: "#3b82f6",
-    careerHistory: [{ year: '2018/19', team: '9Kage Esports' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2022', team: 'Akatsuki' }, { year: '2023', team: 'Dest Revo' }, { year: '2023', team: 'Synotic Titan' }, { year: '2024', team: 'Unknown' }, { year: '2025', team: 'Infiniti Esports' }, { year: '2023', team: 'Infiniti Reborn' }]
+    careerHistory: [{ year: '2018/19', team: '9Kage Esports' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2022', team: 'Akatsuki' }, { year: '2023', team: 'Dest Revo' }, { year: '2023', team: 'Synotic Titan' }, { year: '2024', team: 'Unknown' }, { year: '2025', team: 'Infiniti Esports' }, { year: '2023', team: 'Infiniti Reborn' }],
+    combat: { savage: 8, maniac: 25, gold: 12800, sandbag: 40, teamfight: 72, damage: 680000 },
+    heatPath: "M 30 30 L 70 30 L 70 70 L 30 70 Z M 40 40 L 60 60 M 35 35 L 65 65", heatColor: "#3b82f6"
   },
   { id: 3, name: 'PAKLY', role: 'MID LANER', signature: 'Zuxhin', topHeroes: ['Zuxhin', 'Zetian', 'Lunox'], quote: "Control the mid, control the game.", img: '/PaklyRaw.png', stats: { mechanics: 88, mapSense: 95, aggression: 70, teamwork: 98, pool: 90 }, lanePos: { top: '50%', left: '50%' }, heroStats: [{ name: 'Zuxhin', wr: '75%' }, { name: 'Zetian', wr: '82%' }, { name: 'Lunox', wr: '70%' }], 
-    heatPath: "M 10 10 L 90 90 M 20 80 L 80 20 M 40 40 L 60 40 L 60 60 L 40 60 Z", heatColor: "#ef4444",
-    careerHistory: [{ year: '2018/19', team: 'Frostz' }, { year: '2019', team: 'Zoo Esports' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2023', team: 'Dest Revo' }, { year: '2023', team: 'Synotic Titan' }, { year: '2024', team: 'Skibidi Academy' }, { year: '2025', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' } ]
+    careerHistory: [{ year: '2018/19', team: 'Frostz' }, { year: '2019', team: 'Zoo Esports' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2023', team: 'Dest Revo' }, { year: '2023', team: 'Synotic Titan' }, { year: '2024', team: 'Skibidi Academy' }, { year: '2025', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' } ],
+    combat: { savage: 1, maniac: 8, gold: 11200, sandbag: 35, teamfight: 85, damage: 720000 },
+    heatPath: "M 10 10 L 90 90 M 20 80 L 80 20 M 40 40 L 60 40 L 60 60 L 40 60 Z", heatColor: "#ef4444"
   },
   { id: 4, name: 'STARLIGHTEX', role: 'GOLD LANER', signature: 'Claude', topHeroes: ['Claude', 'Karrie', 'Moskov'], quote: "Scaling is a lifestyle.", img: '/StarRaw.png', stats: { mechanics: 92, mapSense: 80, aggression: 85, teamwork: 82, pool: 78 }, lanePos: { top: '82%', left: '82%' }, heroStats: [{ name: 'Claude', wr: '80%' }, { name: 'Karrie', wr: '76%' }, { name: 'Moskov', wr: '73%' }], 
-    heatPath: "M 60 60 L 90 60 L 90 90 L 60 90 Z M 75 75 L 50 50", heatColor: "#a855f7",
-    careerHistory: [{ year: '2018/19', team: '9Kage Esports' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' }]
+    careerHistory: [{ year: '2018/19', team: '9Kage Esports' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' }],
+    combat: { savage: 12, maniac: 42, gold: 14500, sandbag: 30, teamfight: 68, damage: 950000 },
+    heatPath: "M 60 60 L 90 60 L 90 90 L 60 90 Z M 75 75 L 50 50", heatColor: "#a855f7"
   },
   { id: 5, name: 'IKZN', role: 'ROAMER', signature: 'Grock', topHeroes: ['Grock', 'Chou', 'Guin'], quote: "I am the shield of the team.", img: '/IkznRaw.png', stats: { mechanics: 80, mapSense: 98, aggression: 88, teamwork: 95, pool: 85 }, lanePos: { top: '65%', left: '75%' }, heroStats: [{ name: 'Grock', wr: '80%' }, { name: 'Chou', wr: '81%' }, { name: 'Guin', wr: '68%' }], 
-    heatPath: "M 60 10 L 90 10 L 90 40 L 60 40 Z M 75 25 L 35 35 L 65 65", heatColor: "#22c55e",
-    careerHistory: [{ year: '2018/19', team: '9Kage Esports' }, { year: '2019', team: 'Zoo Esports' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2023', team: 'Dest Revo' }, { year: '2023', team: 'Synotic Titan' }, { year: '2024', team: 'Unknown' }, { year: '2025', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' }]
+    careerHistory: [{ year: '2018/19', team: '9Kage Esports' }, { year: '2019', team: 'Zoo Esports' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2023', team: 'Dest Revo' }, { year: '2023', team: 'Synotic Titan' }, { year: '2024', team: 'Unknown' }, { year: '2025', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' }],
+    combat: { savage: 0, maniac: 2, gold: 8900, sandbag: 120, teamfight: 96, damage: 210000 },
+    heatPath: "M 60 10 L 90 10 L 90 40 L 60 40 Z M 75 25 L 35 35 L 65 65", heatColor: "#22c55e"
   },
   { id: 6, name: 'IMPOLOLO', role: 'GOLD LANER (SUB)', signature: 'Granger', topHeroes: ['Granger', 'Moskov', 'Claude'], quote: "Done is better than perfect.", img: '/ImpololoRaw.png', stats: { mechanics: 87, mapSense: 77, aggression: 81, teamwork: 83, pool: 75 }, isSub: true, heroStats: [{ name: 'Granger', wr: '70%' }, { name: 'Moskov', wr: '68%' }, { name: 'Claude', wr: '65%' }],
-    careerHistory: [{ year: '2018/19', team: 'Frostz' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' }]
+    careerHistory: [{ year: '2018/19', team: 'Frostz' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' }],
+    combat: { savage: 3, maniac: 10, gold: 11000, sandbag: 25, teamfight: 50, damage: 320000 }
   },
 ];
 
+// ... StatRadar and PlayerCard stay the same ...
 const StatRadar = ({ stats }) => {
   if (!stats) return null;
   const points = [{ label: 'MECH', val: stats.mechanics }, { label: 'MAP', val: stats.mapSense }, { label: 'AGR', val: stats.aggression }, { label: 'TEAM', val: stats.teamwork }, { label: 'POOL', val: stats.pool }];
@@ -39,7 +46,7 @@ const StatRadar = ({ stats }) => {
     return `${x},${y}`;
   };
   return (
-    <div className="relative w-full flex justify-center py-2 text-black">
+    <div className="relative w-full flex justify-center py-2 text-black text-left">
       <svg width="140" height="140" viewBox="0 0 100 100">
         {[20, 40, 60, 80, 100].map((level) => (
           <polygon key={level} points={points.map((_, i) => getCoordinates(i, level)).join(' ')} fill="none" stroke="currentColor" strokeWidth="0.2" strokeDasharray="1,1" opacity="0.2" />
@@ -65,13 +72,13 @@ const PlayerCard = ({ player }) => {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative h-[500px] w-full perspective-1000 group" whileHover={!isMobile ? "flipped" : ""} onClick={() => isMobile && setIsFlipped(!isFlipped)}>
       <motion.div className="w-full h-full relative preserve-3d" animate={isMobile ? (isFlipped ? "flipped" : "front") : undefined} variants={{ front: { rotateY: 0 }, flipped: { rotateY: 180 } }} transition={{ duration: 0.7, type: 'spring', stiffness: 120, damping: 20 }}>
-        <div className="absolute inset-0 backface-hidden z-20">
+        <div className="absolute inset-0 backface-hidden z-20 text-left">
           <div className="relative h-full bg-white/[0.03] border border-white/10 rounded-sm overflow-hidden bg-[#111]">
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-90 z-10"></div>
             <div className="absolute inset-0 flex items-center justify-center">
               {player.img ? <img src={player.img} alt={player.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" /> : <User size={60} className="text-white/5" />}
             </div>
-            <div className="absolute bottom-0 left-0 p-6 z-20 w-full text-left">
+            <div className="absolute bottom-0 left-0 p-6 z-20 w-full">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2 h-2 bg-white rounded-full animate-pulse shadow-[0_0_8px_#fff]"></div>
                 <p className="text-white/40 text-[8px] tracking-[0.4em] font-black uppercase font-rajdhani">{player.role}</p>
@@ -80,8 +87,8 @@ const PlayerCard = ({ player }) => {
             </div>
           </div>
         </div>
-        <div className="absolute inset-0 backface-hidden z-10" style={{ transform: 'rotateY(180deg)' }}>
-          <div className="h-full bg-white text-black rounded-sm p-6 flex flex-col justify-between border-2 border-white shadow-2xl text-left relative overflow-hidden">
+        <div className="absolute inset-0 backface-hidden z-10 text-left" style={{ transform: 'rotateY(180deg)' }}>
+          <div className="h-full bg-white text-black rounded-sm p-6 flex flex-col justify-between border-2 border-white shadow-2xl relative overflow-hidden">
             <h3 className="text-2xl font-orbitron font-black uppercase italic border-b-4 border-black pb-2 mb-4">{player.name}</h3>
             <div className="bg-zinc-100/50 rounded-sm mb-4"><StatRadar stats={player.stats} /></div>
             <div className="space-y-4">
@@ -103,35 +110,27 @@ const PlayerCard = ({ player }) => {
 
 const MiniIntelCard = ({ player, isMobile, onClose }) => {
   const [activeHero, setActiveHero] = useState(0);
-
   if (isMobile) {
     return (
-      <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 touch-none">
+      <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 touch-none text-left">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="absolute inset-0 bg-black/95 backdrop-blur-sm" />
-        <motion.div 
-          initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
-          className="relative w-full max-w-[320px] h-fit max-h-[85vh] bg-[#0c0c0c] border border-white/20 p-6 rounded-sm shadow-2xl font-mono flex flex-col overflow-hidden"
-          onClick={(e) => e.stopPropagation()}
-        >
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-[320px] h-fit max-h-[85vh] bg-[#0c0c0c] border border-white/20 p-6 rounded-sm shadow-2xl font-mono flex flex-col overflow-hidden" onClick={(e) => e.stopPropagation()}>
           <div className="absolute top-0 left-0 w-full h-1 bg-red-600" />
           <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/5 rounded-full text-white/50"><X size={20}/></button>
-          
           <div className="mb-4 text-left">
             <p className="text-red-500 text-[9px] font-black uppercase tracking-[0.3em] mb-1 font-orbitron italic">Intel_Recovered</p>
             <h5 className="text-white font-orbitron font-black text-2xl uppercase italic leading-none">{player.name}</h5>
           </div>
-
-          <div className="space-y-6 overflow-y-auto pr-1">
-            <div className="bg-white/[0.03] p-4 border border-white/5">
-              <div className="flex justify-between items-baseline mb-2 text-left">
+          <div className="space-y-6 overflow-y-auto pr-1 text-left">
+            <div className="bg-white/[0.03] p-4 border border-white/5 text-left">
+              <div className="flex justify-between items-baseline mb-2">
                 <span className="text-white/30 text-[9px] font-black uppercase tracking-widest">Efficiency</span>
                 <motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-3xl">{player.heroStats[activeHero].wr}</motion.span>
               </div>
-              <div className="h-1 bg-white/10 w-full overflow-hidden">
+              <div className="h-1 bg-white/10 w-full rounded-full overflow-hidden text-left">
                 <motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_10px_red]" />
               </div>
             </div>
-
             <div className="space-y-1.5 text-left">
               <p className="text-[8px] text-white/20 uppercase tracking-widest mb-2 font-black italic">// SELECT_UNIT</p>
               {player.heroStats.map((hero, idx) => (
@@ -142,13 +141,11 @@ const MiniIntelCard = ({ player, isMobile, onClose }) => {
               ))}
             </div>
           </div>
-
           <div className="mt-6 pt-4 border-t border-white/5 text-center"><p className="text-[7px] text-white/10 uppercase tracking-[0.3em]">Unit_Data_Stream_v2.0</p></div>
         </motion.div>
       </div>
     );
   }
-
   const topVal = parseInt(player.lanePos?.top || 0);
   const leftVal = parseInt(player.lanePos?.left || 0);
   const verticalPos = topVal > 60 ? 'bottom-0' : 'top-0'; 
@@ -159,12 +156,12 @@ const MiniIntelCard = ({ player, isMobile, onClose }) => {
         <span className="text-red-500 text-[8px] font-black uppercase tracking-widest block mb-1">Target_Acquired</span>
         <h5 className="text-white font-orbitron font-black text-base md:text-lg leading-none uppercase italic">{player.name}</h5>
       </div>
-      <div className="space-y-4">
+      <div className="space-y-4 text-left">
         <div>
-          <div className="flex justify-between items-end mb-1 text-left"><span className="text-white/30 text-[8px] font-black uppercase">Win_Rate</span><motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-lg md:text-xl">{player.heroStats[activeHero].wr}</motion.span></div>
-          <div className="h-1 bg-white/5 w-full"><motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_8px_red]" /></div>
+          <div className="flex justify-between items-end mb-1"><span className="text-white/30 text-[8px] font-black uppercase">Win_Rate</span><motion.span key={activeHero} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white font-orbitron font-black text-lg md:text-xl">{player.heroStats[activeHero].wr}</motion.span></div>
+          <div className="h-1 bg-white/5 w-full text-left"><motion.div initial={{ width: 0 }} animate={{ width: player.heroStats[activeHero].wr }} className="h-full bg-red-600 shadow-[0_0_8px_red]" /></div>
         </div>
-        <div className="grid grid-cols-1 gap-1">
+        <div className="grid grid-cols-1 gap-1 text-left">
           {player.heroStats.map((hero, idx) => (
             <button key={hero.name} onMouseEnter={() => setActiveHero(idx)} className={`flex items-center justify-between px-2 py-1.5 border text-[8px] md:text-[9px] font-black transition-all ${activeHero === idx ? 'bg-white text-black border-white' : 'bg-white/5 border-white/5 text-white/40'}`}><span className="uppercase">{hero.name}</span>{activeHero === idx && <Target size={10} />}</button>
           ))}
@@ -174,8 +171,57 @@ const MiniIntelCard = ({ player, isMobile, onClose }) => {
   );
 };
 
+const UnitStats = () => {
+  const [activeCat, setActiveCat] = useState('savage');
+  const mainPlayers = players.filter(p => !p.isSub); 
+  
+  const categories = [
+    { id: 'savage', label: 'SAVAGE', icon: <Zap size={14} />, color: 'bg-red-600' },
+    { id: 'maniac', label: 'MANIAC', icon: <Target size={14} />, color: 'bg-orange-500' },
+    { id: 'teamfight', label: 'TEAMFIGHT_%', icon: <Users2 size={14} />, color: 'bg-purple-600' }, // NEW
+    { id: 'damage', label: 'TOTAL_DMG', icon: <Sword size={14} />, color: 'bg-indigo-500' }, // NEW
+    { id: 'gold', label: 'AVG_GOLD', icon: <DollarSign size={14} />, color: 'bg-yellow-500' },
+    { id: 'sandbag', label: 'SANDBAG', icon: <ShieldAlert size={14} />, color: 'bg-blue-500' },
+  ];
+  const maxValue = Math.max(...mainPlayers.map(p => p.combat[activeCat]));
+
+  return (
+    <div className="w-full text-left font-mono">
+      <div className="flex flex-wrap gap-2 md:gap-4 mb-12">
+        {categories.map((cat) => (
+          <button key={cat.id} onClick={() => setActiveCat(cat.id)} className={`flex items-center gap-3 px-6 py-4 border transition-all duration-300 ${activeCat === cat.id ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.2)]' : 'bg-transparent text-white/40 border-white/10 hover:border-white/30'}`}>
+            {cat.icon} <span className="text-[10px] font-black uppercase tracking-widest">{cat.label}</span>
+          </button>
+        ))}
+      </div>
+      <div className="space-y-8 md:space-y-12">
+        {mainPlayers.map((player) => {
+          const isTop = player.combat[activeCat] === maxValue && maxValue !== 0;
+          const percentage = maxValue === 0 ? 0 : (player.combat[activeCat] / maxValue) * 100;
+          return (
+            <div key={player.id} className="group">
+              <div className="flex justify-between items-end mb-3">
+                <div className="flex items-center gap-4">
+                  <span className={`text-lg md:text-2xl font-orbitron font-black italic transition-colors ${isTop ? 'text-white' : 'text-white/20'}`}>{player.name}</span>
+                  {isTop && <motion.span initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="px-2 py-0.5 bg-red-600 text-[8px] text-white font-black tracking-tighter">TOP_PERFORMER</motion.span>}
+                </div>
+                <motion.span key={activeCat + player.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-xl md:text-3xl font-orbitron font-black text-white tabular-nums">
+                  {activeCat === 'gold' || activeCat === 'damage' ? player.combat[activeCat].toLocaleString() : activeCat === 'teamfight' ? `${player.combat[activeCat]}%` : player.combat[activeCat]}
+                </motion.span>
+              </div>
+              <div className="h-1.5 md:h-3 bg-white/5 w-full relative overflow-hidden border border-white/5">
+                <motion.div initial={{ width: 0 }} animate={{ width: `${percentage}%` }} transition={{ duration: 1, ease: "circOut" }} className={`h-full relative ${categories.find(c => c.id === activeCat).color} ${isTop ? 'shadow-[0_0_20px_rgba(220,38,38,0.5)]' : ''}`} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 const TacticalMap = () => {
-  const mainPlayers = players.filter(p => !p.isSub);
+  const mainPlayers = players.filter(p => !p.isSub); 
   const [activePlayer, setActivePlayer] = useState(null);
   const [viewMode, setViewMode] = useState('position'); 
   const [isMobile, setIsMobile] = useState(false);
@@ -186,28 +232,23 @@ const TacticalMap = () => {
     return () => window.removeEventListener('resize', checkDevice);
   }, []);
 
-  // --- LOCK SCROLL LOGIC ---
   useEffect(() => {
-    if (activePlayer && isMobile) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    if (activePlayer && isMobile) { document.body.style.overflow = 'hidden'; } 
+    else { document.body.style.overflow = 'unset'; }
     return () => { document.body.style.overflow = 'unset'; };
   }, [activePlayer, isMobile]);
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 font-mono text-white text-left font-bold italic">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full text-left">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 font-mono text-white italic font-bold">
           <div className="flex gap-2">
             <button onClick={() => { setViewMode('position'); setActivePlayer(null); }} className={`flex items-center gap-2 px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all border ${viewMode === 'position' ? 'bg-white text-black border-white' : 'bg-transparent text-white/40 border-white/10'}`}><MapIcon size={14} /> Position_View</button>
             <button onClick={() => { setViewMode('heatmap'); setActivePlayer(null); }} className={`flex items-center gap-2 px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all border ${viewMode === 'heatmap' ? 'bg-white text-black border-white shadow-lg shadow-white/5' : 'bg-transparent text-white/40 border-white/10'}`}><Flame size={14} /> Heat_Map</button>
           </div>
-          <p className="text-[9px] text-white/20 font-black tracking-[0.4em] uppercase italic">{isMobile ? '[ TAP_UNIT_FOR_INTEL ]' : '[ HOVER_UNIT_FOR_INTEL ]'}</p>
+          <p className="text-[9px] text-white/20 font-black tracking-[0.4em] uppercase">{isMobile ? '[ TAP_UNIT_FOR_INTEL ]' : '[ HOVER_UNIT_FOR_INTEL ]'}</p>
         </div>
-
         <div className="relative aspect-square md:aspect-video w-full bg-black border border-white/10 rounded-sm shadow-2xl overflow-visible px-4">
-          <div className="relative w-full h-full overflow-hidden rounded-sm">
+          <div className="relative w-full h-full overflow-hidden rounded-sm text-left">
              <img src="/MapML.jpg" className={`w-full h-full object-cover transition-all duration-1000 ${viewMode === 'heatmap' ? 'brightness-[0.4] contrast-125 saturate-150' : 'opacity-40 grayscale'}`} alt="map" />
              <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
                 <AnimatePresence>
@@ -240,7 +281,7 @@ const PlayerJourney = () => {
   const [openFileId, setOpenFileId] = useState(null);
   const toggleFile = (id) => setOpenFileId(openFileId === id ? null : id);
   return (
-    <div className="py-10 max-w-4xl mx-auto space-y-4 text-white text-left font-bold italic">
+    <div className="py-10 max-w-4xl mx-auto space-y-4 text-white text-left italic font-bold">
       <p className="text-[10px] font-orbitron font-black text-white/20 uppercase tracking-[0.5em] mb-8 font-rajdhani">Unit_Archive_Logs //</p>
       {players.map((p) => (
         <div key={p.id} className="border border-white/10 overflow-hidden bg-white/[0.01]">
@@ -276,18 +317,24 @@ const Roster = () => {
     <div className="bg-[#080808] min-h-screen">
       <section id="lineup" className="py-24 md:py-32 relative overflow-hidden text-left text-white font-bold italic">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="mb-16">
+          <div className="mb-16 text-left">
             <h2 className="text-7xl md:text-[120px] font-orbitron font-[900] text-white tracking-tighter uppercase italic leading-none">THE <br /> <span className="text-transparent" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.2)' }}>PERSONNEL</span></h2>
             <div className="flex flex-wrap gap-4 mt-12 border-b border-white/5 pb-8 font-mono">
               <button onClick={() => setActiveTab('roster')} className={`flex items-center gap-2 px-8 py-4 font-orbitron font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'roster' ? 'bg-white text-black' : 'text-white/30 hover:text-white'}`}><Users size={16}/> [ 01. Roster ]</button>
               <button onClick={() => setActiveTab('strat')} className={`flex items-center gap-2 px-8 py-4 font-orbitron font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'strat' ? 'bg-white text-black shadow-lg shadow-white/5' : 'text-white/30 hover:text-white'}`}><MapIcon size={16}/> [ 02. Map_Strat ]</button>
               <button onClick={() => setActiveTab('journey')} className={`flex items-center gap-2 px-8 py-4 font-orbitron font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'journey' ? 'bg-white text-black' : 'text-white/30 hover:text-white'}`}><History size={16}/> [ 03. Player_Journey ]</button>
+              <button onClick={() => setActiveTab('combat')} className={`flex items-center gap-2 px-8 py-4 font-orbitron font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'combat' ? 'bg-white text-black shadow-lg shadow-white/5' : 'text-white/30 hover:text-white'}`}><Activity size={16}/> [ 04. Combat_Stats ]</button>
             </div>
           </div>
           <AnimatePresence mode="wait">
             {activeTab === 'roster' && (<motion.div key="roster" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">{players.map((player) => <PlayerCard key={player.id} player={player} />)}</motion.div>)}
             {activeTab === 'strat' && <TacticalMap key="strat" />}
             {activeTab === 'journey' && <PlayerJourney key="journey" />}
+            {activeTab === 'combat' && (
+              <motion.div key="combat" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
+                <UnitStats />
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </section>
