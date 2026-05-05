@@ -12,7 +12,6 @@ const Gallery = () => {
     checkDevice();
     window.addEventListener('resize', checkDevice);
     
-    // FIX: Lock scroll bila modal buka
     if (selectedImage) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -97,7 +96,7 @@ const Gallery = () => {
         </AnimatePresence>
       </motion.div>
 
-      {/* --- BLUEPRINT MODAL (FIXED FOR MOBILE) --- */}
+      {/* --- BLUEPRINT MODAL --- */}
       <AnimatePresence>
         {selectedImage && (
           <div className="fixed inset-0 z-[999] flex items-center justify-center p-0 md:p-10">

@@ -13,7 +13,6 @@ const coreValues = [
   { id: 8, title: "Precision", label: "EXECUTION", desc: "Split-second decision making. Every move is calculated, every shot intentional.", icon: <Crosshair size={32} />, color: "from-cyan-600/20" }
 ];
 
-// Duplicate data untuk loop tanpa putus
 const duplicatedValues = [...coreValues, ...coreValues];
 
 const Values = () => {

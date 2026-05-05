@@ -17,7 +17,7 @@ const achievements = [
     title: 'Runner Up', 
     tournament: 'Gerko Games', 
     year: '2022', 
-    icon: <Award />, // Menggunakan Award sebagai ganti Medal (tiada nombor 1)
+    icon: <Award />, 
     code: 'RE-02', 
     color: 'text-zinc-300' 
   },
