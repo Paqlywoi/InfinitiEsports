@@ -5,6 +5,7 @@ import { LayoutGrid, History, BarChart3, Activity, Target, ShieldAlert } from 'l
 const matchData = {
   upcoming: [],
   results: [
+    { id: 10, vs: "Kroni K902", score: "2 - 0", status: "WIN", event: "Friendly" },
     { id: 9, vs: "Mega Autotech", score: "1 - 2", status: "LOSS", event: "Friendly" },
     { id: 8, vs: "Madfox Chaos", score: "0 - 1", status: "LOSS", event: "MAL Qualifier S5" },
     { id: 7, vs: "Volt Esport", score: "0 - 2", status: "LOSS", event: "Friendly" },

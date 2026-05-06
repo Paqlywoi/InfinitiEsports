@@ -27,7 +27,7 @@ const Hero = () => {
   const formatTime = (date) => date.toLocaleTimeString('en-GB', { hour12: false });
   const formatDate = (date) => date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
 
-  const tickerText = "/// [MATCH_REPORT]: INFINITI ESPORTS FALL TO MEGA AUTOTECH 1-2 /// [MANAGEMENT_LOG]: UNIT v2.0.26 DEPLOYMENT ACTIVE /// [TRANSFER_RUMORS]: SPECULATION AROUND BABYNEEZY (KRONI K902) /// ";
+  const tickerText = "/// [MATCH_REPORT]: After four consecutive losses, Infiniti Esports finally breaks the spell with a dominant 2-0 victory over Kroni K902 /// [MANAGEMENT_LOG]: UNIT v2.0.26 DEPLOYMENT ACTIVE /// [TRANSFER_RUMORS]: SPECULATION AROUND BABYNEEZY (KRONI K902) /// ";
 
   return (
     <div id="home" className="relative h-screen w-full flex items-center overflow-hidden bg-[#050505] font-mono selection:bg-white selection:text-black">
