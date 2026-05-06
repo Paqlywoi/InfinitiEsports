@@ -40,7 +40,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black z-10" />
       </div>
 
-      {/* --- 2. SYSTEM HUD (TOP CENTER) --- */}
+      {/* --- 2. SYSTEM HUD --- */}
       <div className="absolute top-10 left-0 w-full z-40 flex justify-center px-6">
         <div className="flex items-center gap-6 md:gap-10 px-6 py-2 bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-full shadow-2xl">
           <div className="flex items-center gap-3">
@@ -56,7 +56,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* --- 3. HIGH-VISIBILITY SOCIAL DOCK (WITH DISCORD) --- */}
+      {/* --- 3. HIGH-VISIBILITY SOCIAL DOCK --- */}
       <div className={`absolute z-50 transition-all duration-700
         ${isMobile ? 'bottom-24 right-6' : 'top-1/2 right-10 -translate-y-1/2'}`}>
         <div className={`flex ${isMobile ? 'flex-row' : 'flex-col'} items-center gap-2 bg-black/60 border border-white/20 p-2 rounded-xl backdrop-blur-xl shadow-[0_0_30px_rgba(0,0,0,0.5)]`}>
@@ -67,7 +67,7 @@ const Hero = () => {
             <Instagram size={20} className="group-hover:scale-110" />
           </a>
 
-          {/* Discord - NEW */}
+          {/* Discord */}
           <a href="https://discord.gg/yduStkjB" target="_blank" rel="noreferrer" 
              className="p-4 bg-white/5 hover:bg-[#5865F2] hover:text-white text-white rounded-lg transition-all duration-300 group">
             <MessageSquare size={20} className="group-hover:scale-110" />
