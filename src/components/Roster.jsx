@@ -3,32 +3,32 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { User, X, BarChart3, Target, Map as MapIcon, Flame, Users, History, FileText, ChevronRight, Zap, DollarSign, ShieldAlert, Activity, Sword, Users2 } from 'lucide-react';
 
 const players = [
-  { id: 1, name: 'SOMALI', role: 'EXP LANER', signature: 'Ruby', topHeroes: ['Ruby', 'Alice', 'Gloo'], quote: "Discipline is the key to victory.", img: '/SomaliRaw.png', stats: { mechanics: 85, mapSense: 90, aggression: 95, teamwork: 80, pool: 88 }, lanePos: { top: '25%', left: '15%' }, heroStats: [{ name: 'Ruby', wr: '78%' }, { name: 'Alice', wr: '72%' }, { name: 'Gloo', wr: '65%' }], 
+  { id: 1, name: 'SOMALI', role: 'EXP LANER', signature: 'Ruby', topHeroes: ['Ruby', 'Alice', 'Gloo'], quote: "Discipline is the key to victory.", img: '/SomaliNT.png', stats: { mechanics: 85, mapSense: 90, aggression: 95, teamwork: 80, pool: 88 }, lanePos: { top: '25%', left: '15%' }, heroStats: [{ name: 'Ruby', wr: '78%' }, { name: 'Alice', wr: '72%' }, { name: 'Gloo', wr: '65%' }], 
     careerHistory: [{ year: '2021', team: 'infiniti Esports o2' }, { year: '2026', team: 'Infiniti Reborn' }],
     combat: { savage: 2, maniac: 12, gold: 10500, sandbag: 95, teamfight: 65, damage: 450000 },
     heatPath: "M 10 10 L 40 10 L 40 40 L 10 40 Z M 25 25 L 35 35 L 50 50", heatColor: "#fbbf24"
   },
-  { id: 2, name: 'RULZ', role: 'JUNGLER', signature: 'Hayabusa', topHeroes: ['Hayabusa', 'Ling', 'Yi Sun Shin'], quote: "Speed is nothing without precision.", img: '/RulzRaw.png', stats: { mechanics: 98, mapSense: 85, aggression: 92, teamwork: 75, pool: 80 }, lanePos: { top: '55%', left: '32%' }, heroStats: [{ name: 'Hayabusa', wr: '85%' }, { name: 'Ling', wr: '79%' }, { name: 'Yi Sun Shin', wr: '74%' }], 
+  { id: 2, name: 'RULZ', role: 'JUNGLER', signature: 'Hayabusa', topHeroes: ['Hayabusa', 'Ling', 'Yi Sun Shin'], quote: "Speed is nothing without precision.", img: '/RulzNT.png', stats: { mechanics: 98, mapSense: 85, aggression: 92, teamwork: 75, pool: 80 }, lanePos: { top: '55%', left: '32%' }, heroStats: [{ name: 'Hayabusa', wr: '85%' }, { name: 'Ling', wr: '79%' }, { name: 'Yi Sun Shin', wr: '74%' }], 
     careerHistory: [{ year: '2018/19', team: '9Kage Esports' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2022', team: 'Akatsuki' }, { year: '2023', team: 'Dest Revo' }, { year: '2023', team: 'Synotic Titan' }, { year: '2024', team: 'Unknown' }, { year: '2025', team: 'Infiniti Esports' }, { year: '2023', team: 'Infiniti Reborn' }],
     combat: { savage: 8, maniac: 25, gold: 12800, sandbag: 40, teamfight: 72, damage: 680000 },
     heatPath: "M 30 30 L 70 30 L 70 70 L 30 70 Z M 40 40 L 60 60 M 35 35 L 65 65", heatColor: "#3b82f6"
   },
-  { id: 3, name: 'PAKLY', role: 'MID LANER', signature: 'Zuxhin', topHeroes: ['Zuxhin', 'Zetian', 'Lunox'], quote: "Control the mid, control the game.", img: '/PaklyRaw.png', stats: { mechanics: 88, mapSense: 95, aggression: 70, teamwork: 98, pool: 90 }, lanePos: { top: '50%', left: '50%' }, heroStats: [{ name: 'Zuxhin', wr: '75%' }, { name: 'Zetian', wr: '82%' }, { name: 'Lunox', wr: '70%' }], 
+  { id: 3, name: 'PAKLY', role: 'MID LANER', signature: 'Zuxhin', topHeroes: ['Zuxhin', 'Zetian', 'Lunox'], quote: "Control the mid, control the game.", img: '/PaklyNT.png', stats: { mechanics: 88, mapSense: 95, aggression: 70, teamwork: 98, pool: 90 }, lanePos: { top: '50%', left: '50%' }, heroStats: [{ name: 'Zuxhin', wr: '75%' }, { name: 'Zetian', wr: '82%' }, { name: 'Lunox', wr: '70%' }], 
     careerHistory: [{ year: '2018/19', team: 'Frostz' }, { year: '2019', team: 'Zoo Esports' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2023', team: 'Dest Revo' }, { year: '2023', team: 'Synotic Titan' }, { year: '2024', team: 'Skibidi Academy' }, { year: '2025', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' } ],
     combat: { savage: 1, maniac: 8, gold: 11200, sandbag: 35, teamfight: 85, damage: 720000 },
     heatPath: "M 10 10 L 90 90 M 20 80 L 80 20 M 40 40 L 60 40 L 60 60 L 40 60 Z", heatColor: "#ef4444"
   },
-  { id: 4, name: 'STARLIGHTEX', role: 'GOLD LANER', signature: 'Claude', topHeroes: ['Claude', 'Karrie', 'Moskov'], quote: "Scaling is a lifestyle.", img: '/StarRaw.png', stats: { mechanics: 92, mapSense: 80, aggression: 85, teamwork: 82, pool: 78 }, lanePos: { top: '82%', left: '82%' }, heroStats: [{ name: 'Claude', wr: '80%' }, { name: 'Karrie', wr: '76%' }, { name: 'Moskov', wr: '73%' }], 
+  { id: 4, name: 'STARLIGHTEX', role: 'GOLD LANER', signature: 'Claude', topHeroes: ['Claude', 'Karrie', 'Moskov'], quote: "Scaling is a lifestyle.", img: '/StarNT.png', stats: { mechanics: 92, mapSense: 80, aggression: 85, teamwork: 82, pool: 78 }, lanePos: { top: '82%', left: '82%' }, heroStats: [{ name: 'Claude', wr: '80%' }, { name: 'Karrie', wr: '76%' }, { name: 'Moskov', wr: '73%' }], 
     careerHistory: [{ year: '2018/19', team: '9Kage Esports' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' }],
     combat: { savage: 12, maniac: 42, gold: 14500, sandbag: 30, teamfight: 68, damage: 950000 },
     heatPath: "M 60 60 L 90 60 L 90 90 L 60 90 Z M 75 75 L 50 50", heatColor: "#a855f7"
   },
-  { id: 5, name: 'IKZN', role: 'ROAMER', signature: 'Grock', topHeroes: ['Grock', 'Chou', 'Guin'], quote: "I am the shield of the team.", img: '/IkznRaw.png', stats: { mechanics: 80, mapSense: 98, aggression: 88, teamwork: 95, pool: 85 }, lanePos: { top: '65%', left: '75%' }, heroStats: [{ name: 'Grock', wr: '80%' }, { name: 'Chou', wr: '81%' }, { name: 'Guin', wr: '68%' }], 
+  { id: 5, name: 'IKZN', role: 'ROAMER', signature: 'Grock', topHeroes: ['Grock', 'Chou', 'Guin'], quote: "I am the shield of the team.", img: '/IkznNT.png', stats: { mechanics: 80, mapSense: 98, aggression: 88, teamwork: 95, pool: 85 }, lanePos: { top: '65%', left: '75%' }, heroStats: [{ name: 'Grock', wr: '80%' }, { name: 'Chou', wr: '81%' }, { name: 'Guin', wr: '68%' }], 
     careerHistory: [{ year: '2018/19', team: '9Kage Esports' }, { year: '2019', team: 'Zoo Esports' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2023', team: 'Dest Revo' }, { year: '2023', team: 'Synotic Titan' }, { year: '2024', team: 'Unknown' }, { year: '2025', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' }],
     combat: { savage: 0, maniac: 2, gold: 8900, sandbag: 120, teamfight: 96, damage: 210000 },
     heatPath: "M 60 10 L 90 10 L 90 40 L 60 40 Z M 75 25 L 35 35 L 65 65", heatColor: "#22c55e"
   },
-  { id: 6, name: 'IMPOLOLO', role: 'GOLD LANER (SUB)', signature: 'Granger', topHeroes: ['Granger', 'Moskov', 'Claude'], quote: "Done is better than perfect.", img: '/ImpololoRaw.png', stats: { mechanics: 87, mapSense: 77, aggression: 81, teamwork: 83, pool: 75 }, isSub: true, heroStats: [{ name: 'Granger', wr: '70%' }, { name: 'Moskov', wr: '68%' }, { name: 'Claude', wr: '65%' }],
+  { id: 6, name: 'IMPOLOLO', role: 'GOLD LANER (SUB)', signature: 'Granger', topHeroes: ['Granger', 'Moskov', 'Claude'], quote: "Done is better than perfect.", img: '/ImpololoNT.png', stats: { mechanics: 87, mapSense: 77, aggression: 81, teamwork: 83, pool: 75 }, isSub: true, heroStats: [{ name: 'Granger', wr: '70%' }, { name: 'Moskov', wr: '68%' }, { name: 'Claude', wr: '65%' }],
     careerHistory: [{ year: '2018/19', team: 'Frostz' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' }],
     combat: { savage: 3, maniac: 10, gold: 11000, sandbag: 25, teamfight: 50, damage: 320000 }
   },
