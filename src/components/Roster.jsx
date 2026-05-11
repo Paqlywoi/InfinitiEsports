@@ -28,7 +28,7 @@ const players = [
     combat: { savage: 0, maniac: 2, gold: 8900, sandbag: 120, teamfight: 96, damage: 210000 },
     heatPath: "M 60 10 L 90 10 L 90 40 L 60 40 Z M 75 25 L 35 35 L 65 65", heatColor: "#22c55e"
   },
-  { id: 6, name: 'IMPOLOLO', role: 'GOLD LANER (SUB)', signature: 'Granger', topHeroes: ['Granger', 'Moskov', 'Claude'], quote: "Done is better than perfect.", img: '/ImpololoNT.png', stats: { mechanics: 87, mapSense: 77, aggression: 81, teamwork: 83, pool: 75 }, isSub: true, heroStats: [{ name: 'Granger', wr: '70%' }, { name: 'Moskov', wr: '68%' }, { name: 'Claude', wr: '65%' }],
+  { id: 6, name: 'IMPOLOLO', role: 'GOLD LANER', signature: 'Granger', topHeroes: ['Granger', 'Moskov', 'Claude'], quote: "Done is better than perfect.", img: '/ImpololoNT.png', stats: { mechanics: 87, mapSense: 77, aggression: 81, teamwork: 83, pool: 75 }, isSub: true, heroStats: [{ name: 'Granger', wr: '70%' }, { name: 'Moskov', wr: '68%' }, { name: 'Claude', wr: '65%' }],
     careerHistory: [{ year: '2018/19', team: 'Frostz' }, { year: '2021', team: 'Infiniti Esports' }, { year: '2026', team: 'Infiniti Reborn' }],
     combat: { savage: 3, maniac: 10, gold: 11000, sandbag: 25, teamfight: 50, damage: 320000 }
   },

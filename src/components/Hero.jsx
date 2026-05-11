@@ -27,7 +27,7 @@ const Hero = () => {
   const formatTime = (date) => date.toLocaleTimeString('en-GB', { hour12: false });
   const formatDate = (date) => date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
 
-  const tickerText = "/// [MATCH_REPORT]: Infiniti Esports saw mixed results recently, securing a dominant 2-0 sweep against KRUK before falling 0-2 to Red Liquid in the following match /// [MANAGEMENT_LOG]: UNIT v2.0.26 DEPLOYMENT ACTIVE /// [TRANSFER_RUMORS]: SPECULATION AROUND BABYNEEZY (KRONI K902) /// ";
+  const tickerText = "/// [MATCH_REPORT]: Infiniti Esports finished 5th in the Fast Tour MLBB by Seera, securing a 1-0 win against F.E before their run was cut short by a narrow 0-1 loss to Quincy /// [MANAGEMENT_LOG]: UNIT v2.0.26 DEPLOYMENT ACTIVE /// [TRANSFER_RUMORS]: SPECULATION AROUND BABYNEEZY (KRONI K902) /// ";
 
   return (
     <div id="home" className="relative h-screen w-full flex items-center overflow-hidden bg-[#050505] font-mono selection:bg-white selection:text-black">
