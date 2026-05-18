@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutGrid, History, BarChart3, Activity, Target, ShieldAlert } from 'lucide-react';
+import { LayoutGrid, History, BarChart3, Activity, Target, ShieldAlert, Zap, Trophy, Sliders } from 'lucide-react';
 
 const matchData = {
   upcoming: [],
   results: [
-    { id: 12, vs: "Nexora", score: "2 - 0", status: "WIN", event: "Friendly" },
+    { id: 21, vs: "Jade View", score: "1 - 0", status: "WIN", event: "Equal Grounds:Land Of Dawn By USM" },
+    { id: 20, vs: "Pak Setu", score: "1 - 0", status: "WIN", event: "Equal Grounds:Land Of Dawn By USM" },
+    { id: 19, vs: "Naim Stack 2", score: "0 - 1", status: "LOSS", event: "Equal Grounds:Land Of Dawn By USM" },
+    { id: 18, vs: "Gasak Spirit", score: "0 - 1", status: "LOSS", event: "Equal Grounds:Land Of Dawn By USM" },
+    { id: 17, vs: "Anomali Vortex", score: "0 - 1", status: "LOSS", event: "Equal Grounds:Land Of Dawn By USM" },
+    { id: 16, vs: "Nexora", score: "2 - 0", status: "WIN", event: "Friendly" },
     { id: 15, vs: "Quincy", score: "0 - 1", status: "LOSS", event: "Fast Tour MLBB By Seera" },
     { id: 14, vs: "F.E", score: "1 - 0", status: "WIN", event: "Fast Tour MLBB By Seera" },
     { id: 13, vs: "Red Liquid", score: "0 - 2", status: "LOSS", event: "Friendly" },
@@ -26,6 +31,7 @@ const matchData = {
 
 const Matches = () => {
   const [activeTab, setActiveTab] = useState('history');
+  const [filterMode, setFilterMode] = useState('overall'); // New: 'overall' | 'friendly' | 'tournament'
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -35,11 +41,17 @@ const Matches = () => {
     return () => window.removeEventListener('resize', checkDevice);
   }, []);
 
-  // Calculate Win/Loss Stats
-  const totalMatches = matchData.results.length;
-  const wins = matchData.results.filter(m => m.status === 'WIN').length;
-  const losses = matchData.results.filter(m => m.status === 'LOSS').length;
-  const winRate = ((wins / totalMatches) * 100).toFixed(1);
+  // --- DYNAMIC FILTER LOGIC FOR ANALYTICS ---
+  const filteredResults = matchData.results.filter(m => {
+    if (filterMode === 'friendly') return m.event.toLowerCase() === 'friendly';
+    if (filterMode === 'tournament') return m.event.toLowerCase() !== 'friendly';
+    return true; // overall
+  });
+
+  const totalMatches = filteredResults.length;
+  const wins = filteredResults.filter(m => m.status === 'WIN').length;
+  const losses = filteredResults.filter(m => m.status === 'LOSS').length;
+  const winRate = totalMatches === 0 ? "0.0" : ((wins / totalMatches) * 100).toFixed(1);
 
   return (
     <div id="matches" className="w-full max-w-6xl mx-auto px-6 py-24 md:py-32 relative overflow-hidden font-mono">
@@ -140,34 +152,73 @@ const Matches = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="space-y-12"
+            className="space-y-8"
           >
+            {/* NEW: SUB-FILTER SYSTEM */}
+            <div className="flex flex-wrap gap-2 justify-start items-center bg-white/[0.02] border border-white/5 p-3 rounded-sm">
+              <span className="text-white/20 text-[8px] font-black uppercase tracking-widest px-2 flex items-center gap-1.5">
+                <Sliders size={10}/> Filter_Scope:
+              </span>
+              <button 
+                onClick={() => setFilterMode('overall')}
+                className={`px-4 py-2 text-[9px] font-black uppercase tracking-wider transition-all ${filterMode === 'overall' ? 'bg-red-600 text-white font-bold' : 'text-white/40 hover:text-white bg-white/5'}`}
+              >
+                // OVERALL
+              </button>
+              <button 
+                onClick={() => setFilterMode('friendly')}
+                className={`px-4 py-2 text-[9px] font-black uppercase tracking-wider transition-all ${filterMode === 'friendly' ? 'bg-red-600 text-white font-bold' : 'text-white/40 hover:text-white bg-white/5'}`}
+              >
+                // FRIENDLY
+              </button>
+              <button 
+                onClick={() => setFilterMode('tournament')}
+                className={`px-4 py-2 text-[9px] font-black uppercase tracking-wider transition-all ${filterMode === 'tournament' ? 'bg-red-600 text-white font-bold' : 'text-white/40 hover:text-white bg-white/5'}`}
+              >
+                // TOURNAMENT
+              </button>
+            </div>
+
             {/* BIG STAT BAR */}
-            <div className="bg-white/[0.02] border border-white/5 p-8 md:p-16 rounded-sm text-left">
-              <div className="flex flex-col md:flex-row justify-between items-baseline mb-12 gap-4">
+            <div className="bg-white/[0.02] border border-white/5 p-8 md:p-16 rounded-sm text-left relative overflow-hidden">
+              <div className="flex flex-col md:flex-row justify-between items-baseline mb-12 gap-6 relative z-10">
                 <div>
-                  <h4 className="text-white/30 text-[10px] font-black uppercase tracking-[0.5em] mb-2 font-orbitron">Overall_Combat_Winrate</h4>
-                  <p className="text-6xl md:text-9xl font-orbitron font-[1000] text-white italic leading-none">{winRate}<span className="text-2xl md:text-4xl text-red-600">%</span></p>
+                  <h4 className="text-white/30 text-[10px] font-black uppercase tracking-[0.5em] mb-2 font-orbitron">
+                    {filterMode}_Combat_Winrate
+                  </h4>
+                  <motion.p 
+                    key={winRate}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-6xl md:text-9xl font-orbitron font-[1000] text-white italic leading-none"
+                  >
+                    {winRate}<span className="text-2xl md:text-4xl text-red-600">%</span>
+                  </motion.p>
                 </div>
-                <div className="flex gap-12 border-l border-white/10 pl-8">
+                <div className="flex gap-12 border-l border-white/10 pl-8 w-full md:w-auto justify-between md:justify-end">
                    <div className="text-center">
                      <p className="text-[8px] text-white/20 uppercase font-black mb-1">Victory</p>
-                     <p className="text-3xl text-green-500 font-black">{wins}</p>
+                     <motion.p key={wins} initial={{ y: -5 }} animate={{ y: 0 }} className="text-3xl text-green-500 font-black font-orbitron">{wins}</motion.p>
                    </div>
                    <div className="text-center">
                      <p className="text-[8px] text-white/20 uppercase font-black mb-1">Defeat</p>
-                     <p className="text-3xl text-red-600 font-black">{losses}</p>
+                     <motion.p key={losses} initial={{ y: -5 }} animate={{ y: 0 }} className="text-3xl text-red-600 font-black font-orbitron">{losses}</motion.p>
+                   </div>
+                   <div className="text-center">
+                     <p className="text-[8px] text-white/20 uppercase font-black mb-1">Total</p>
+                     <motion.p key={totalMatches} initial={{ y: -5 }} animate={{ y: 0 }} className="text-3xl text-white/50 font-black font-orbitron">{totalMatches}</motion.p>
                    </div>
                 </div>
               </div>
 
               {/* Progress Bar Container */}
-              <div className="space-y-4">
+              <div className="space-y-4 relative z-10">
                 <div className="h-6 md:h-10 w-full bg-white/5 border border-white/5 relative overflow-hidden flex">
                   {/* Wins Bar */}
                   <motion.div 
+                    key={`win-bar-${filterMode}`}
                     initial={{ width: 0 }}
-                    animate={{ width: `${(wins / totalMatches) * 100}%` }}
+                    animate={{ width: totalMatches === 0 ? '0%' : `${(wins / totalMatches) * 100}%` }}
                     transition={{ duration: 1, ease: "circOut" }}
                     className="h-full bg-green-500 relative group overflow-hidden"
                   >
@@ -175,15 +226,16 @@ const Matches = () => {
                   </motion.div>
                   {/* Losses Bar */}
                   <motion.div 
+                    key={`loss-bar-${filterMode}`}
                     initial={{ width: 0 }}
-                    animate={{ width: `${(losses / totalMatches) * 100}%` }}
-                    transition={{ duration: 1, ease: "circOut", delay: 0.2 }}
+                    animate={{ width: totalMatches === 0 ? '0%' : `${(losses / totalMatches) * 100}%` }}
+                    transition={{ duration: 1, ease: "circOut", delay: 0.1 }}
                     className="h-full bg-red-600"
                   />
                 </div>
                 <div className="flex justify-between text-[8px] font-black uppercase tracking-[0.4em] text-white/20 italic">
                   <span>Victory_Protocol_Active</span>
-                  <span>System_Analysis_Complete</span>
+                  <span>Scope: {filterMode}_data_stream</span>
                 </div>
               </div>
             </div>
@@ -194,14 +246,14 @@ const Matches = () => {
                  <Target size={24} className="text-red-600 mb-6" />
                  <h5 className="text-white font-orbitron font-black uppercase text-xl mb-2 italic">Strike_Accuracy</h5>
                  <p className="text-white/40 text-[10px] leading-relaxed uppercase tracking-widest">
-                   Based on friendly and mal qualifier logs, the unit maintains high performance during the mid-season phase.
+                   Based on friendly and tournament logs, active analytics adjust scaling protocols dynamically per sub-sector.
                  </p>
               </div>
               <div className="bg-white/[0.01] border border-white/5 p-8 text-left">
                  <ShieldAlert size={24} className="text-red-600 mb-6" />
                  <h5 className="text-white font-orbitron font-black uppercase text-xl mb-2 italic">Threat_Response</h5>
                  <p className="text-white/40 text-[10px] leading-relaxed uppercase tracking-widest">
-                   Losses identified primarily in cross-region engagements. Tactical recalibration initialized for upcoming operations.
+                   Losses are systematically tracked to adjust line management and positioning map rotation matrices.
                  </p>
               </div>
             </div>

@@ -27,7 +27,7 @@ const Hero = () => {
   const formatTime = (date) => date.toLocaleTimeString('en-GB', { hour12: false });
   const formatDate = (date) => date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
 
-  const tickerText = "/// [MATCH_REPORT]: Friendly Match Result: Infiniti Esports 2-0 Nexora. A solid performance from the boys to take the series win! /// [MANAGEMENT_LOG]: UNIT v2.0.26 DEPLOYMENT ACTIVE /// [TRANSFER_RUMORS]: SPECULATION AROUND BABYNEEZY (KRONI K902) /// ";
+  const tickerText = "/// [MATCH_REPORT]: Infiniti Esports finishes 4th in the group stage of Equal Grounds: Land Of Dawn by USM, narrowly missing out on the playoffs. Despite securing 2 solid wins, a tough 3-match losing streak ultimately brought their tournament run to an end! /// [MANAGEMENT_LOG]: UNIT v2.0.26 DEPLOYMENT ACTIVE /// [TRANSFER_RUMORS]: SPECULATION AROUND BABYNEEZY (KRONI K902) /// ";
 
   return (
     <div id="home" className="relative h-screen w-full flex items-center overflow-hidden bg-[#050505] font-mono selection:bg-white selection:text-black">
