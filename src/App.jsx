@@ -1,88 +1,70 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Terminal, ShieldAlert } from 'lucide-react';
 
 export default function App() {
   return (
-    // INI PEMBUNGKUS UTAMA YANG TERTINGGAL (Wajib ada 1 pembalut untuk semua elemen)
-    <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center relative overflow-hidden font-mono px-6">
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center relative px-6 py-20 font-sans selection:bg-white/20">
+      
+      {/* Subtle background gradient to make it not completely flat black */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)] pointer-events-none" />
 
-      {/* Background Noise & Overlay */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.05)_0%,transparent_60%)] z-0" />
-
-      {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center w-full max-w-2xl text-center">
-
-        {/* Status Indicator */}
+        
+        {/* Simple, elegant header */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-3 px-4 py-2 bg-red-600/10 border border-red-600/30 rounded-sm mb-8"
-        >
-          <div className="w-2 h-2 bg-red-600 rounded-full animate-ping shadow-[0_0_10px_#ff0000]"></div>
-          <span className="text-[10px] uppercase tracking-[0.3em] font-black text-red-500">System_Offline</span>
-        </motion.div>
-
-        {/* Glitch Icon */}
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8 text-white/20"
-        >
-          <ShieldAlert size={64} strokeWidth={1} />
-        </motion.div>
-
-        {/* Big Title */}
-        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-6xl font-orbitron font-[1000] text-white uppercase italic tracking-tighter mb-4"
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="mb-12"
         >
-          OPERATIONS <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>HALTED</span>
-        </motion.h1>
+          <h1 className="text-2xl md:text-4xl font-light text-white tracking-[0.3em] uppercase">
+            Infiniti Esports
+          </h1>
+          <div className="w-12 h-[1px] bg-white/20 mx-auto mt-8"></div>
+        </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="text-white/40 text-xs md:text-sm tracking-widest uppercase mb-12 max-w-md"
-        >
-          Tactical recalibration in progress. We are temporarily offline to upgrade our matrices. We will return shortly.
-        </motion.p>
-
-        {/* Terminal Log */}
+        {/* Emotional Message */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="w-full bg-white/[0.02] border border-white/5 p-4 md:p-6 rounded-sm text-left"
+          transition={{ duration: 2, delay: 1 }}
+          className="space-y-6 text-white/60 text-sm md:text-base leading-loose font-light"
         >
-          <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-2">
-            <Terminal size={14} className="text-red-500" />
-            <span className="text-[9px] uppercase tracking-[0.3em] text-white/40">Terminal_Log</span>
-          </div>
-          <div className="space-y-2 text-[10px] md:text-xs text-white/30 uppercase tracking-wider flex flex-col gap-1">
-            <p className="flex justify-between"><span>[14:02:00] Disconnecting nodes...</span><span className="text-green-500">OK</span></p>
-            <p className="flex justify-between"><span>[14:02:05] Archiving combat logs...</span><span className="text-green-500">OK</span></p>
-            <p className="flex justify-between"><span>[14:02:10] Initiating hypersleep...</span><span className="text-green-500">OK</span></p>
-            <motion.p
-              animate={{ opacity: [1, 0.3, 1] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="text-red-500 font-bold mt-2 pt-2 border-t border-white/5"
-            >
-              _ AWAITING_REBOOT_SIGNAL
-            </motion.p>
+          <p>
+            To our fans, families, and the community,
+          </p>
+          <p>
+            From the early days of Zoo Esports to the ambitious vision of Infiniti Reborn, you have been our greatest strength. Today, with heavy hearts, we announce the indefinite suspension of all Infiniti Esports operations.
+          </p>
+          <p>
+            While we leave a very small door open for the future, the reality is that this is most likely our final goodbye. The competitive journey is beautiful but demanding, and sometimes, the hardest decision is knowing when to step away from the game.
+          </p>
+          <p>
+            Thank you for cheering for us in our victories and standing by our side through every defeat. Thank you for your energy, your belief, and the memories we built together. We will cherish this journey forever.
+          </p>
+        </motion.div>
+
+        {/* Roster Sign-off */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2, delay: 2.5 }}
+          className="mt-16 text-[10px] md:text-xs text-white/30 tracking-[0.2em] uppercase"
+        >
+          <p className="mb-6">
+            Somali <span className="mx-2 text-white/10">|</span> 
+            Rulz <span className="mx-2 text-white/10">|</span> 
+            Pakly <span className="mx-2 text-white/10">|</span> 
+            StarlightEx <span className="mx-2 text-white/10">|</span> 
+            IKZN <span className="mx-2 text-white/10">|</span> 
+            Impololo
+          </p>
+          <div className="inline-block pt-6 border-t border-white/10">
+            <p className="italic lowercase tracking-widest text-white/20">Signing off.</p>
           </div>
         </motion.div>
-      </div>
 
-      {/* Footer Text */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[8px] tracking-[0.5em] text-white/10 uppercase whitespace-nowrap">
-        Infiniti Reborn // End of Transmission
       </div>
-
     </div>
   );
 }
