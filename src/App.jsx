@@ -10,17 +10,19 @@ export default function App() {
 
       <div className="relative z-10 flex flex-col items-center w-full max-w-2xl text-center">
         
-        {/* Simple, elegant header */}
+        {/* Elegant Logo Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="mb-12"
+          className="mb-12 flex flex-col items-center"
         >
-          <h1 className="text-2xl md:text-4xl font-light text-white tracking-[0.3em] uppercase">
-            Infiniti Esports
-          </h1>
-          <div className="w-12 h-[1px] bg-white/20 mx-auto mt-8"></div>
+          <img 
+            src="/InfinitiLogo.png" 
+            alt="Infiniti Esports" 
+            className="w-24 md:w-32 h-auto object-contain opacity-70 grayscale mb-8"
+          />
+          <div className="w-12 h-[1px] bg-white/20 mx-auto"></div>
         </motion.div>
 
         {/* Emotional Message */}
@@ -51,7 +53,7 @@ export default function App() {
           transition={{ duration: 2, delay: 2.5 }}
           className="mt-16 text-[10px] md:text-xs text-white/30 tracking-[0.2em] uppercase"
         >
-          <p className="mb-6">
+          <p className="mb-6 leading-relaxed">
             Somali <span className="mx-2 text-white/10">|</span> 
             Rulz <span className="mx-2 text-white/10">|</span> 
             Pakly <span className="mx-2 text-white/10">|</span> 
